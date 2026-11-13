@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.10.1 — 2026-11-13
+- **Fix: the Reactio Draw tab did not open in Obsidian 1.15** (*View failed to load … reading 'path'*). The view had a method `load(file)`; Obsidian 1.15 calls a view's own `load()` (from Obsidian's Component) without arguments when it opens it. The method is now `loadFile(file)`. The load test now builds the view on native Obsidian classes and calls `load()` as Obsidian 1.15 does.
+- **Fix: stereo kept in SMILES and InChI of a drawing opened from a note.** Reactio Draw reports *ready* before the end of its page has been read, where OpenChemLib sits; a drawing set at once then lost its stereo for the session (*Stereo (wedges, @, E/Z) is left out of the SMILES and InChI*). Commands now also wait for the page's load event.
+- Checked in Obsidian 1.15.1 on Linux: the tab opens, `IM_1.cdxml` opens with its tables, and its SMILES keeps `@`/`@@`.
+
 ## 0.10.0 — 2026-11-13
 - **Reactio Draw 1.15.2** (tag v1.15.2, commit 5eeaf67; `reactio/reactio.html` is `Reactio Draw.html` of `ReactioDraw-Web.zip`, identical to `index.html` of the tag). `main.js` grows to about 13 MB. New since 1.7.1, among others: names → structures read in the page itself (OPSIN compiled to JavaScript, Octet Draw's name tables, a Wikidata dictionary with CAS numbers, ChEBI drawings of natural products), the CAS number in Properties, pKa estimates, animations between two drawings, cyclohexane boats and twist-boats, metal complexes drawn and laid out as chemists draw them, labels placed as ChemDraw places them (NH with the H above, HO2C right-justified).
 - **Reactio Draw's licence is now the Mozilla Public License 2.0** (from Reactio Draw 1.15; up to 1.14.1 it was AGPL-3.0-or-later). The MPL-2.0 covers Reactio Draw's own files only, so this plugin's `main.js` is no longer AGPL as a whole: the wrapper is MIT (`LICENSE`, formerly `LICENSE-MIT`), the page inside it MPL-2.0 (`reactio/LICENSE.txt`). New licence files of Reactio Draw's components: Octet Draw (Apache-2.0), OPSIN in JavaScript, Dimorphite-DL (Apache-2.0), cdxmorph (MIT), ChEBI (CC BY 4.0), Wikidata (CC0).

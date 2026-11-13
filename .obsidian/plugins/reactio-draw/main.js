@@ -23,7 +23,8 @@ class ReactioBridge {
   /**
    * @param {Window} host the window that holds the iframe (listens for messages)
    * @param {() => Window|null} frame the iframe's contentWindow
-   * @param {{ onEvent?: (name: string) => void, timeout?: number }} opts
+   * @param {{ onEvent?: (name: string) => void, timeout?: number, loaded?: Promise<unknown> }} opts  loaded: resolves when
+   *   the iframe's page has been read to its end (its load event); commands wait for it as well as for 'ready'
    */
   constructor(host, frame, opts = {}) {
     this.host = host; this.frame = frame; this.opts = opts;
@@ -46,7 +47,12 @@ class ReactioBridge {
     if (d.ok) p.resolve(d.result); else p.reject(new Error(d.error || 'Reactio Draw error'));
   }
 
-  whenReady() { return this.ready ? Promise.resolve() : new Promise((r) => this.readyWaiters.push(r)); }
+  whenReady() {
+    const ready = this.ready ? Promise.resolve() : new Promise((r) => this.readyWaiters.push(r));
+    // Reactio Draw says 'ready' before the end of its page is read, where OpenChemLib (stereo in SMILES and InChI) sits;
+    // a drawing set before that loses its stereo for the session, so commands also wait for the page's load event
+    return this.opts.loaded ? Promise.all([ready, this.opts.loaded]).then(() => undefined) : ready;
+  }
 
   async call(op, args = {}) {
     await this.whenReady();
@@ -281,7 +287,7 @@ module.exports = class ReactioDrawPlugin extends Plugin {
       await this.linkToCdxml(note, f);
     }
     (this.reactioFiles = this.reactioFiles || new Set()).add(f.path);
-    await v.load(f);
+    await v.loadFile(f);
     v.autosave = true;
   }
 
@@ -431,7 +437,7 @@ module.exports = class ReactioDrawPlugin extends Plugin {
     const open = this.showOpen(file.path);
     if (open) return open;
     const v = await this.openView();
-    await v.load(file);
+    await v.loadFile(file);
     if (file.extension === SCHEME_EXT || file.extension === DOC_EXT || (this.reactioFiles && this.reactioFiles.has(file.path))) v.autosave = true;
     return v;
   }
@@ -490,7 +496,9 @@ class ReactioView extends ItemView {
     const el = this.contentEl; el.empty(); el.addClass('reactio-draw-view'); // layout in styles.css
     try { await this.plugin.preparePage(); } catch (e) { el.createEl('p', { text: 'Reactio Draw could not be started: its page is missing from the plugin folder.' }); return; }
     this.frame = el.createEl('iframe', { cls: 'reactio-draw-frame', attr: { src: this.plugin.pageUrl(), allow: 'clipboard-read; clipboard-write' } });
+    const loaded = new Promise((r) => { this.frame.addEventListener('load', () => r(), { once: true }); setTimeout(r, 30000); });
     this.bridge = new ReactioBridge(window, () => this.frame && this.frame.contentWindow, {
+      loaded,
       onEvent: (ev) => { if (ev === 'change' && !this.loading) { this.setDirty(true); this.snapshotSoon(); } },
     });
     this.plugin.viewOpened();
@@ -592,10 +600,11 @@ class ReactioView extends ItemView {
 
   openFile() {
     if (this.dirty) new Notice('Reactio Draw: the current drawing has unsaved changes; it is replaced only if you pick a file.');
-    new DrawingSuggest(this.app, this.plugin, (file) => this.load(file)).open();
+    new DrawingSuggest(this.app, this.plugin, (file) => this.loadFile(file)).open();
   }
 
-  async load(file) {
+  // not load(): that name is Obsidian's Component.load(), which Obsidian 1.15 calls (without a file) when it opens the view
+  async loadFile(file) {
     // the file is already open in another Reactio tab: go there; this tab closes if it holds nothing of its own
     if (this.plugin.showOpen(file.path, this)) {
       if (!this.path && !this.dirty) this.leaf.detach();
