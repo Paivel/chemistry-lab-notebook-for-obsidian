@@ -1,0 +1,118 @@
+.modal.cwr-report-modal {
+  width: min(900px, calc(100vw - 32px));
+  max-width: min(900px, calc(100vw - 32px));
+}
+
+.cwr-report-modal .modal-content {
+  overflow-x: hidden;
+}
+
+.cwr-serialized-path {
+  margin: 0 0 0.35rem;
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+
+.cwr-formula-help {
+  margin-bottom: 0.75rem;
+}
+
+.cwr-formula-textarea,
+.cwr-settings-formula {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 230px;
+  resize: vertical;
+  font-family: var(--font-monospace);
+  line-height: 1.45;
+}
+
+.cwr-field-section {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-s);
+  background: var(--background-secondary);
+}
+
+.cwr-field-title {
+  margin-bottom: 0.55rem;
+  font-weight: var(--font-semibold);
+}
+
+.cwr-field-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.cwr-field-chip {
+  height: auto;
+  padding: 0.2rem 0.45rem;
+  font-family: var(--font-monospace);
+  font-size: var(--font-ui-smaller);
+  line-height: 1.35;
+}
+
+.cwr-note-field-hint {
+  margin: 0.7rem 0 0;
+}
+
+.cwr-modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.cwr-formula-setting {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.cwr-formula-setting .setting-item-info,
+.cwr-formula-setting .setting-item-control {
+  width: 100%;
+  max-width: none;
+}
+
+.cwr-formula-setting .setting-item-info {
+  margin-bottom: 0.75rem;
+}
+
+.cwr-formula-setting .setting-item-control {
+  justify-content: stretch;
+}
+
+.cwr-custom-placeholder .setting-item-control {
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.cwr-custom-placeholder input[type="text"] {
+  min-width: 180px;
+}
+
+@media (max-width: 600px) {
+  .modal.cwr-report-modal {
+    width: calc(100vw - 16px);
+    max-width: calc(100vw - 16px);
+  }
+
+  .cwr-custom-placeholder {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .cwr-custom-placeholder .setting-item-control,
+  .cwr-custom-placeholder input[type="text"] {
+    width: 100%;
+  }
+}
+
+.cwr-report-modal .cwr-warning {
+  color: var(--text-warning);
+}

@@ -1,0 +1,325 @@
+.markdown-rendered input.task-list-item-checkbox[data-task="/"],
+.markdown-source-view.mod-cm6 input.task-list-item-checkbox[data-task="/"],
+.markdown-preview-view input.task-list-item-checkbox[data-task="/"],
+li.task-list-item[data-task="/"] input.task-list-item-checkbox {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 17px !important;
+  height: 17px !important;
+  border-radius: 50% !important;
+  border: 2px solid orange !important;
+  background: orange !important;
+  vertical-align: middle !important;
+}
+
+.kanban-plugin input.task-list-item-checkbox[data-task="/"],
+.kanban-plugin .task-list-item[data-task="/"] input.task-list-item-checkbox,
+.kanban-plugin__markdown-preview-wrapper input.task-list-item-checkbox[data-task="/"],
+.kanban-plugin__markdown-preview-wrapper .task-list-item[data-task="/"] input.task-list-item-checkbox {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 17px !important;
+  height: 17px !important;
+  border-radius: 50% !important;
+  border: 2px solid orange !important;
+  background: orange !important;
+  vertical-align: middle !important;
+  display: inline-block !important;
+  position: relative !important;
+}
+
+.kanban-today-view {
+  padding: 6px 8px;
+}
+
+.kanban-today-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 7px 9px;
+  margin-bottom: 6px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  background: var(--background-primary);
+}
+
+.kanban-today-status-button {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  position: relative;
+  width: 18px;
+  min-width: 18px;
+  height: 18px;
+  margin-top: 3px !important;
+  flex: 0 0 18px;
+  cursor: pointer;
+}
+
+.kanban-today-status-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+}
+
+.kanban-today-status-button[data-status=" "]::before {
+  border: 1.5px solid #b7b7b7;
+  border-radius: 4px;
+  background: transparent;
+}
+
+.kanban-today-status-button[data-status="/"]::before {
+  border-radius: 999px;
+  background: #f4a20a;
+}
+
+.kanban-today-status-button[data-status="x"]::before,
+.kanban-today-status-button[data-status="X"]::before {
+  border-radius: 4px;
+  background: #4caf50;
+}
+
+.kanban-today-status-button[data-status="/"]::after,
+.kanban-today-status-button[data-status="x"]::after,
+.kanban-today-status-button[data-status="X"]::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 4px;
+  height: 8px;
+  border-right: 2px solid var(--background-primary);
+  border-bottom: 2px solid var(--background-primary);
+  transform: translate(-50%, -60%) rotate(45deg);
+}
+
+.kanban-today-text-wrap {
+  flex: 1;
+  min-width: 0;
+  padding-top: 2px;
+}
+
+.kanban-today-title {
+  font-size: 0.84rem;
+  font-weight: 400;
+  line-height: 1;
+  margin: 0;
+}
+
+.kanban-today-extra {
+  margin-top: 3px;
+  padding-left: 8px;
+  border-left: 2px solid var(--background-modifier-border);
+  font-size: 0.84rem;
+  font-weight: 400;
+  color: var(--text-normal);
+}
+
+.kanban-today-extra-text {
+  line-height: 1 !important;
+  white-space: normal;
+}
+
+.kanban-today-extra-text:empty {
+  display: none;
+}
+
+.kanban-today-title.markdown-rendered,
+.kanban-today-title.markdown-rendered p,
+.kanban-today-extra-text.markdown-rendered p {
+  margin: 0 !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.kanban-today-extra-text.markdown-rendered ul,
+.kanban-today-extra-text.markdown-rendered ol {
+  margin: 0 !important;
+  padding-left: 14px !important;
+}
+
+.kanban-today-extra-text.markdown-rendered li {
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+}
+
+.kanban-today-extra-text.markdown-rendered ul li + li,
+.kanban-today-extra-text.markdown-rendered ol li + li {
+  margin-top: 0 !important;
+}
+
+.kanban-today-extra-text .kanban-inline-tag[data-tag-badge="true"] {
+  margin-left: 4px !important;
+  line-height: 1.1 !important;
+  vertical-align: baseline !important;
+}
+
+.kanban-today-title.markdown-rendered img,
+.kanban-today-extra-text.markdown-rendered img,
+.kanban-today-title img,
+.kanban-today-extra-text img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin-top: 6px;
+}
+
+.kanban-today-title.markdown-rendered .internal-link,
+.kanban-today-extra-text.markdown-rendered .internal-link,
+.kanban-today-title.markdown-rendered a,
+.kanban-today-extra-text.markdown-rendered a,
+.kanban-today-title .internal-link,
+.kanban-today-extra-text .internal-link,
+.kanban-today-title a,
+.kanban-today-extra-text a {
+  cursor: pointer;
+}
+
+.kanban-today-title .internal-embed,
+.kanban-today-extra-text .internal-embed,
+.kanban-today-title .markdown-embed,
+.kanban-today-extra-text .markdown-embed,
+.kanban-today-title.markdown-rendered .internal-embed,
+.kanban-today-extra-text.markdown-rendered .internal-embed,
+.kanban-today-title.markdown-rendered .markdown-embed,
+.kanban-today-extra-text.markdown-rendered .markdown-embed {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  border: none;
+  padding: 0;
+  margin-top: 6px;
+}
+
+.kanban-today-title .image-embed,
+.kanban-today-extra-text .image-embed,
+.kanban-today-title.markdown-rendered .image-embed,
+.kanban-today-extra-text.markdown-rendered .image-embed {
+  display: block;
+  max-width: 100%;
+}
+
+.kanban-today-footer {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--background-modifier-border);
+  display: flex;
+  justify-content: center;
+}
+
+.kanban-today-open-button {
+  font-size: 0.8rem;
+  padding: 5px 10px;
+  border-radius: 6px;
+}
+
+.kanban-inline-tag[data-tag-badge="true"] {
+  all: unset;
+  display: inline-block !important;
+  margin-left: 6px !important;
+  padding: 2px 10px !important;
+  border-radius: 999px !important;
+  font-size: 0.78rem !important;
+  line-height: 1.35 !important;
+  font-weight: 600 !important;
+  vertical-align: middle !important;
+  white-space: nowrap !important;
+  text-decoration: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.kanban-inline-tag[data-tag-variant="yellow"],
+.kanban-inline-tag-yellow {
+  background: #f4c542 !important;
+  color: #1f1f1f !important;
+}
+
+.kanban-inline-tag[data-tag-variant="red"],
+.kanban-inline-tag-red {
+  background: #ff3b30 !important;
+  color: #ffffff !important;
+}
+
+.kanban-today-subtasks {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.kanban-today-subtask {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.kanban-today-subtask-status-button {
+  width: 16px;
+  min-width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  margin-top: 2px !important;
+}
+
+.kanban-today-subtask-text {
+  flex: 1;
+  min-width: 0;
+  line-height: 1;
+}
+
+.kanban-today-subtask-text.markdown-rendered p {
+  margin: 0;
+}
+
+.kanban-plugin li.task-list-item[data-task="/"] {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.kanban-plugin li.task-list-item[data-task="/"] > input.task-list-item-checkbox {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  align-self: center !important;
+  transform: translateY(-2px) !important;
+}
+
+.task-list-item-checkbox[data-task="/"]::after {
+  margin-left: -0.5px !important;
+}
+
+.HyperMD-task-line[data-task="/"] .task-list-item-checkbox[data-task="/"]::after,
+.HyperMD-list-line[data-task="/"] .task-list-item-checkbox[data-task="/"]::after,
+.kanban-plugin__markdown-preview-wrapper .task-list-item-checkbox[data-task="/"]::after,
+.kanban-plugin li.task-list-item[data-task="/"] > input.task-list-item-checkbox::after {
+  margin-left: -1px !important;
+}
+
+.kanban-today-tags {
+  margin-top: 4px;
+  line-height: 1;
+}
+
+.kanban-today-tags .kanban-inline-tag[data-tag-badge="true"] {
+  display: inline-block !important;
+  margin-left: 0 !important;
+  margin-right: 6px !important;
+}
+/* the footer of the Today tab: buttons one under the other, full width */
+.kanban-today-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: stretch;
+}
+.kanban-today-footer .kanban-today-open-button {
+  width: 100%;
+}

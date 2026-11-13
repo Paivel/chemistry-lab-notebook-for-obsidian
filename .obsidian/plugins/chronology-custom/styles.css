@@ -1,0 +1,354 @@
+.chronology-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.chronology-calendar-box {
+    font-size: smaller;
+    max-width: 20em;
+    flex: 0;
+}
+
+.chronology-calendar-box table.chronology-calendar-grid {
+    min-width: initial;
+}
+
+.chronology-calendar-grid {
+    border-collapse: collapse;
+}
+
+.chronology-calendar-grid td,
+.chronology-calendar-grid th {
+    border: 1px solid var(--background-modifier-border);
+    width: 24pt;
+    min-width: 20pt;
+    height: 24pt;
+    text-align: center;
+}
+
+.chronology-calendar-weeknumber {
+    color: var(--text-faint);
+    display: none !important;
+}
+
+.chronology-selected .chronology-calendar-weeknumber {
+    color: var(--text-normal);
+}
+
+.chronology-calendar-day {
+    position: relative;
+    overflow: hidden;
+}
+
+.chronology-calendar-selectable:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.chronology-calendar-today {
+    font-weight: 800;
+}
+
+.chronology-calendar-todaylink {
+    color: var(--text-muted);
+}
+
+.chronology-other-month {
+    color: var(--text-faint);
+}
+
+.chronology-grid-dayofweek {
+    color: #7f8c7a;
+}
+
+
+
+
+.chronology-calendar-chevron {
+    color: #000000;
+    cursor: var(--cursor);
+    border-radius: 4px;
+}
+
+.chronology-calendar-chevron:hover {
+    color: #000000;
+}
+
+.chevron::before {
+	border-style: solid;
+	border-width: 0.25em 0.25em 0 0;
+	content: '';
+	display: inline-block;
+	height: 0.45em;
+	left: 0.15em;
+	position: relative;
+	top: 0.15em;
+	transform: rotate(-45deg);
+	/* vertical-align: top; */
+	width: 0.45em;
+}
+
+.chevron.right:before {
+	left: 0;
+	transform: rotate(45deg);
+}
+
+.chevron.bottom:before {
+	top: 0;
+	transform: rotate(135deg);
+}
+
+.chevron.left:before {
+	left: 0.25em;
+	transform: rotate(-135deg);
+}
+.chronology-calendar-grid thead tr:nth-child(2) th:first-child,
+.chronology-calendar-grid tbody tr td:first-child {
+    display: none !important;
+}
+
+.chronology-calendar-grid thead tr:first-child th {
+    max-width: calc(100% * 5 / 6) !important;
+    margin: 0 auto !important;
+    display: table-cell !important;
+}
+
+.chronology-calendar-grid thead tr:first-child th {
+    
+    margin: 0 auto !important;
+    display: table-cell !important;
+}
+
+/* only month/year text in the center cell */
+.chronology-calendar-grid thead tr:first-child th[colspan="5"] span {
+    font-size: 18px;
+    font-weight: 700;
+    font-family: var(--font-interface);
+}
+
+.chronology-calendar-grid thead tr:first-child th[colspan="5"] span:first-of-type {
+    color: var(--text-normal);
+    margin-right: 0.22em;
+}
+
+
+
+.chronology-calendar-grid thead tr:first-child th span:first-of-type {
+    color: var(--text-normal);
+    margin-right: 0.22em;
+}
+
+
+
+.chronology-calendar-grid thead tr:first-child th:has(span[data-scheme="nature"]) span:last-child,
+.chronology-calendar-grid thead tr:first-child th[data-scheme="nature"] span:last-child {
+    color: var(--color-green) !important;
+}
+
+.chronology-calendar-grid:has(.chronology-heat-level) {
+    border-collapse: separate !important;
+    border-spacing: 6px !important;
+}
+
+.chronology-calendar-grid:has(.chronology-heat-level) td,
+.chronology-calendar-grid:has(.chronology-heat-level) th {
+    border: none !important;
+}
+
+.chronology-calendar-day.chronology-heat-level {
+    border-radius: 8px;
+}
+
+.chronology-calendar-day span {
+    position: relative;
+    z-index: 3;
+    font-weight: 500;
+}
+
+.chronology-calendar-heat-background {
+    position: absolute;
+    z-index: 1;
+    background-color: transparent;
+}
+
+.chronology-calendar-day.chronology-selected::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.chronology-calendar-day.chronology-heat-level .chronology-calendar-heat-background {
+    inset: 2px;
+    border-radius: 8px;
+}
+
+.chronology-calendar-day.chronology-heat-percent .chronology-calendar-heat-background {
+    inset: 0;
+    background: transparent !important;
+}
+
+.chronology-calendar-day.chronology-heat-percent .chronology-calendar-heat-background::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: var(--heat);
+    background-color: #b7d3b0;
+}
+
+.chronology-calendar-day.chronology-heat-level.chronology-heat-0 .chronology-calendar-heat-background {
+    background-color: transparent !important;
+}
+
+.chronology-calendar-day.chronology-heat-level.chronology-heat-1 .chronology-calendar-heat-background {
+    background-color: #edf5e8 !important;
+}
+
+.chronology-calendar-day.chronology-heat-level.chronology-heat-2 .chronology-calendar-heat-background {
+    background-color: #dbead5 !important;
+}
+
+.chronology-calendar-day.chronology-heat-level.chronology-heat-3 .chronology-calendar-heat-background {
+    background-color: #b7d3b0 !important;
+}
+
+.chronology-calendar-day.chronology-heat-level.chronology-heat-4 .chronology-calendar-heat-background {
+    background-color: #7fa37a !important;
+}
+
+.chronology-calendar-day.chronology-heat-level[data-scheme="nature"][data-nature-bucket="-1"] .chronology-calendar-heat-background {
+    background-color: transparent !important;
+}
+
+.chronology-calendar-day.chronology-heat-level[data-scheme="nature"][data-nature-bucket="0"] .chronology-calendar-heat-background {
+    background-color: #c62828 !important;
+}
+
+.chronology-calendar-day.chronology-heat-level[data-scheme="nature"][data-nature-bucket="1"] .chronology-calendar-heat-background {
+    background-color: #f8cdd3 !important;
+}
+
+.chronology-calendar-day.chronology-heat-level[data-scheme="nature"][data-nature-bucket="2"] .chronology-calendar-heat-background {
+    background-color: #cfe8ff !important;
+}
+
+.chronology-calendar-day.chronology-heat-level[data-scheme="nature"][data-nature-bucket="3"] .chronology-calendar-heat-background {
+    background-color: #1976d2 !important;
+}
+
+.theme-light .chronology-calendar-day span {
+    color: #000000;
+}
+
+.theme-dark .chronology-calendar-day span {
+    color: #ffffff;
+}
+
+.chronology-calendar-day.chronology-heat-level.chronology-heat-1 span,
+.chronology-calendar-day.chronology-heat-level.chronology-heat-2 span,
+.chronology-calendar-day.chronology-heat-level.chronology-heat-3 span {
+    color: #1f2a36 !important;
+}
+
+.chronology-calendar-day.chronology-heat-level.chronology-heat-4 span {
+    color: #ffffff !important;
+}
+
+.chronology-calendar-day.chronology-heat-level[data-scheme="nature"][data-nature-bucket="0"] span,
+.chronology-calendar-day.chronology-heat-level[data-scheme="nature"][data-nature-bucket="3"] span {
+    color: #ffffff !important;
+}
+
+.chronology-calendar-day.chronology-heat-level[data-scheme="nature"][data-nature-bucket="1"] span,
+.chronology-calendar-day.chronology-heat-level[data-scheme="nature"][data-nature-bucket="2"] span {
+    color: #1f2a36 !important;
+}
+
+.theme-dark .chronology-calendar-day.chronology-heat-percent span {
+    color: #ffffff !important;
+}
+
+.theme-light .chronology-calendar-day.chronology-heat-percent span {
+    color: #000000 !important;
+}
+
+.chronology-calendar-day.chronology-heat-percent[data-heat-over="true"] span {
+    color: #1f2a36 !important;
+}
+
+.chronology-calendar-day.chronology-heat-level[data-scheme="redgreen"][data-nature-bucket="-1"] .chronology-calendar-heat-background {
+    background-color: transparent !important;
+}
+
+.chronology-calendar-day.chronology-heat-level[data-scheme="redgreen"][data-nature-bucket="0"] .chronology-calendar-heat-background {
+    background-color: #c62828 !important;
+}
+
+.chronology-calendar-day.chronology-heat-level[data-scheme="redgreen"][data-nature-bucket="1"] .chronology-calendar-heat-background {
+    background-color: #ef9a9a !important;
+}
+
+.chronology-calendar-day.chronology-heat-level[data-scheme="redgreen"][data-nature-bucket="2"] .chronology-calendar-heat-background {
+    background-color: #a5d6a7 !important;
+}
+
+.chronology-calendar-day.chronology-heat-level[data-scheme="redgreen"][data-nature-bucket="3"] .chronology-calendar-heat-background {
+    background-color: #2e7d32 !important;
+}
+
+.chronology-calendar-day.chronology-heat-level[data-scheme="redgreen"][data-nature-bucket="0"] span,
+.chronology-calendar-day.chronology-heat-level[data-scheme="redgreen"][data-nature-bucket="3"] span {
+    color: #ffffff !important;
+}
+
+.chronology-calendar-day.chronology-heat-level[data-scheme="redgreen"][data-nature-bucket="1"] span,
+.chronology-calendar-day.chronology-heat-level[data-scheme="redgreen"][data-nature-bucket="2"] span {
+    color: #1f2a36 !important;
+}
+
+.chronology-calendar-day.chronology-selected:not([data-scheme="nature"])::before {
+    background-color: #3f6fb5 !important;
+    opacity: 1;
+}
+
+.chronology-calendar-day.chronology-selected[data-scheme="nature"]::before {
+    background-color: var(--interactive-accent-hover);
+    opacity: 1;
+}
+
+.chrono-note-indicator {
+  font-size: 14px;
+  margin-right: 6px;
+  opacity: 1;
+}
+
+.chrono-note-indicator[data-type="created"] {
+  color: #4caf50;
+}
+
+.chrono-note-indicator[data-type="modified"] {
+  color: #2196f3;
+}
+
+td.chronology-calendar-day.chronology-selected span,
+td.chronology-calendar-day.chronology-selected.chronology-heat-level span,
+td.chronology-calendar-day.chronology-selected.chronology-heat-percent span,
+td.chronology-calendar-day.chronology-selected[data-scheme="nature"] span,
+td.chronology-calendar-day.chronology-selected[data-scheme="redgreen"] span,
+td.chronology-calendar-day.chronology-selected[data-heat-over="true"] span,
+td.chronology-calendar-day.chronology-selected[data-scheme="nature"][data-nature-bucket="-1"] span,
+td.chronology-calendar-day.chronology-selected[data-scheme="nature"][data-nature-bucket="0"] span,
+td.chronology-calendar-day.chronology-selected[data-scheme="nature"][data-nature-bucket="1"] span,
+td.chronology-calendar-day.chronology-selected[data-scheme="nature"][data-nature-bucket="2"] span,
+td.chronology-calendar-day.chronology-selected[data-scheme="nature"][data-nature-bucket="3"] span,
+td.chronology-calendar-day.chronology-selected[data-scheme="redgreen"][data-nature-bucket="-1"] span,
+td.chronology-calendar-day.chronology-selected[data-scheme="redgreen"][data-nature-bucket="0"] span,
+td.chronology-calendar-day.chronology-selected[data-scheme="redgreen"][data-nature-bucket="1"] span,
+td.chronology-calendar-day.chronology-selected[data-scheme="redgreen"][data-nature-bucket="2"] span,
+td.chronology-calendar-day.chronology-selected[data-scheme="redgreen"][data-nature-bucket="3"] span {
+    color: #ffffff !important;
+}

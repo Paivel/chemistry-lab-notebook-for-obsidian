@@ -1,0 +1,42 @@
+# Release of the vault: push a tag such as v1.0.0 (after adding version and date-released to CITATION.cff and a
+# "## v1.0.0" section to CHANGELOG.md). GitHub then publishes two archives with the release; Zenodo, when connected
+# to this repository, archives the release and gives it a DOI.
+#   Chemistry-Lab-Notebook-v1.0.0.zip  the whole vault, for a new start
+#   Plugins-update-v1.0.0.zip          the notebook's own plugins without their settings, for an existing vault
+name: Release
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check CITATION.cff and CHANGELOG.md
+        run: |
+          v="${GITHUB_REF_NAME#v}"
+          grep -Eq "^version: \"?${v}\"?$" CITATION.cff || { echo "::error::CITATION.cff needs: version: \"${v}\""; exit 1; }
+          grep -Eq '^date-released: "?[0-9]{4}-[0-9]{2}-[0-9]{2}"?$' CITATION.cff || { echo "::error::CITATION.cff needs: date-released: \"YYYY-MM-DD\""; exit 1; }
+          awk -v t="$GITHUB_REF_NAME" '$1 == "##" && $2 == t { found = 1 } END { exit !found }' CHANGELOG.md || { echo "::error::CHANGELOG.md has no section ## ${GITHUB_REF_NAME}"; exit 1; }
+      - name: Build the archives
+        run: |
+          set -e
+          tag="$GITHUB_REF_NAME"
+          git archive --format=zip --prefix="Chemistry Lab Notebook ${tag}/" -o "Chemistry-Lab-Notebook-${tag}.zip" HEAD
+          own="cdx-scheme-image reaction-structure-search chemistry-word-report reactio-draw telegram-tlc-image nmr-downloader template-guard kanban-day-planner chronology-custom"
+          mkdir -p "upd/Plugins-update-${tag}/plugins"
+          for id in $own; do git archive HEAD ".obsidian/plugins/${id}" | tar -x -C upd; done
+          mv upd/.obsidian/plugins/* "upd/Plugins-update-${tag}/plugins/"
+          find "upd/Plugins-update-${tag}" -name data.json -delete
+          cp docs/updating.md "upd/Plugins-update-${tag}/HOW TO UPDATE.md"
+          (cd upd && zip -qrX "../Plugins-update-${tag}.zip" "Plugins-update-${tag}")
+          ls -l *.zip
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          awk -v t="$GITHUB_REF_NAME" '$1 == "##" { p = ($2 == t); next } p' CHANGELOG.md > notes.md
+          gh release create "$GITHUB_REF_NAME" "Chemistry-Lab-Notebook-${GITHUB_REF_NAME}.zip" "Plugins-update-${GITHUB_REF_NAME}.zip" \
+            --title "Chemistry Lab Notebook ${GITHUB_REF_NAME}" --notes-file notes.md

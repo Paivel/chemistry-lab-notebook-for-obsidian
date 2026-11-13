@@ -1,0 +1,18 @@
+PubChem export — doi:10.0000/example
+
+Written: PubChem example.sdf, PubChem example_pubchem.csv
+
+Exported with warnings (3)
+  LAB-example-11  (no name)  [IM_00 example tags]
+    - no Name:: — the record has no name
+  LAB-example-4.6  (6bSR,10aRS)-7,10-bis(4-chlorophenyl)-6b,7,8,9,10,10a-hexahydroacenaphtho[1,2-e][1,2,4]triazine  [IM_1 Cl acenaphthene]
+    - racemate: written with relative stereo (STERAC) and "Racemic." in the comment
+  LAB-example-4.30  (4aRS,8aSR)-1,4-bis(4-(trifluoromethyl)phenyl)decahydrobenzo[e][1,2,4]triazine  [IM_2 CF3 cyclohexene]
+    - racemate: written with relative stereo (STERAC) and "Racemic." in the comment
+
+Next steps (the plugin does not upload anything):
+1. Sign in to PubChem Submissions (linked from the PubChem home page). A new account is a test account: you can upload, validate and preview, but nothing becomes public until PubChem upgrades it to a full account.
+2. New Submission > Substances > upload the .sdf. In the _pubchem.csv racemates and relative configurations are given as InChI with /s3 or /s2 instead of SMILES; the .sdf is preferred because it keeps the drawn structure.
+3. Check the preview of a few records: structure, name, DOI, hold-until date.
+4. Commit the submission.
+A later upload with the same registry IDs replaces these records (new version); in PubChem Submissions, Substances > Substances In PubChem has Modify and Revoke for deposited records.

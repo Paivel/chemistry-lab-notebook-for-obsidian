@@ -1,0 +1,14 @@
+{
+  "cdxFolder": "Files",
+  "journalFolder": "Journal",
+  "excludedFiles": "Open CDX Editor.cdx, open chem draw.cdx",
+  "imageSuffix": " scheme",
+  "format": "svg",
+  "scale": 4,
+  "whiteBackground": true,
+  "replaceExistingImage": true,
+  "productPic": true,
+  "productPicWidth": 300,
+  "productYield": true,
+  "updateOnStartup": true
+}

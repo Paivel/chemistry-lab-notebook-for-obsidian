@@ -1,0 +1,19 @@
+{
+  "notesFolder": "Journal",
+  "cdxFolder": "Files",
+  "ord": {
+    "outputFolder": "Export/ORD",
+    "pbtxt": false,
+    "defaultRole": "UNSPECIFIED",
+    "includeProcedure": false,
+    "fieldNames": {}
+  },
+  "pubchem": {
+    "prefix": "",
+    "idScheme": "article",
+    "outputFolder": "Export/PubChem",
+    "lastExportPrefix": "",
+    "lastExportScheme": "",
+    "perNote": {}
+  }
+}

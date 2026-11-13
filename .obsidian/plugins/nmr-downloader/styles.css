@@ -1,0 +1,9 @@
+/* NMR Downloader */
+
+/* text fields of the settings and dialogs: full width (paths, e-mail addresses), or narrow (frequency in MHz) */
+.nmr-downloader-wide {
+  width: 100%;
+}
+.nmr-downloader-narrow {
+  width: 70px;
+}

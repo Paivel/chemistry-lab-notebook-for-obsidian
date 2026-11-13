@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this software or workflow in your research, please cite it using the metadata below."
+title: "Chemistry Lab Notebook for Obsidian"
+type: software
+authors:
+  - family-names: "Sakharov"
+    given-names: "Pavel"
+    affiliation: "Technion – Israel Institute of Technology"
+license: MIT
+repository-code: "https://github.com/Paivel/chemistry-lab-notebook-for-obsidian"
+# For each release add version: "X.Y.Z" and date-released: "YYYY-MM-DD" here (the release workflow checks them).
+abstract: >-
+  A free and open-source electronic laboratory notebook workflow for synthetic
+  chemistry, implemented as a reproducible Obsidian vault with reaction records,
+  analytical-data integration, planning tools, templates, and local chemical
+  structure and reaction searching.
+keywords:
+  - electronic laboratory notebook
+  - ELN
+  - chemistry
+  - synthetic chemistry
+  - Obsidian
+  - reproducible research
+  - chemical structure search

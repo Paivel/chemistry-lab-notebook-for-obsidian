@@ -1,0 +1,15 @@
+{
+  "folderPath": "Journal",
+  "outputFolder": "Report",
+  "imageFolder": "Files",
+  "defaultValues": {
+    "procedure": "",
+    "yield": "",
+    "MW": "",
+    "eluent": "",
+    "state": "",
+    "scale": ""
+  },
+  "customDefaults": [],
+  "textFormula": "Product **[[num_in_article]]** was synthesized from alkene **1.X** and triazene **2.Y** ([[scale]] mmol) by the general procedure [[procedure]]. Purified by flash filtration through neutral aluminum oxide ([[eluent]]). [[state]] ([[mass]] mg, [[yield]]).\n[[HNMR]]; [[CNMR]]; [[FNMR]]. [[HRMS]]."
+}

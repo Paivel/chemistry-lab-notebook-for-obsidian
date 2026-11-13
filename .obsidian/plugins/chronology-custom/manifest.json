@@ -1,0 +1,10 @@
+{
+  "id": "chronology-custom",
+  "name": "Chronology Custom",
+  "version": "1.1.14-pavel.1",
+  "minAppVersion": "0.15.0",
+  "description": "A modified version of Chronology by Gabriele Cannata. Custom modifications by Pavel Sakharov.",
+  "author": "Gabriele Cannata; modified by Pavel Sakharov",
+  "authorUrl": "https://github.com/Canna71/obsidian-chronology",
+  "isDesktopOnly": false
+}

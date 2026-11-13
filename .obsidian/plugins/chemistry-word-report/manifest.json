@@ -1,0 +1,9 @@
+{
+  "id": "chemistry-word-report",
+  "name": "Chemistry Word Report",
+  "version": "1.2.3",
+  "minAppVersion": "1.5.0",
+  "description": "Generate an editable Word (DOCX) draft of chemistry Supporting Information from reaction notes listed in a Dataview table.",
+  "author": "Pavel Sakharov",
+  "isDesktopOnly": true
+}

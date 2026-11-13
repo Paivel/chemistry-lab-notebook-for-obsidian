@@ -1,0 +1,909 @@
+{
+  "journalFolder": "Journal",
+  "templatesFolder": "Templates",
+  "lock": true,
+  "checkOnOpen": true,
+  "allFields": false,
+  "projects": {
+    "Exp": {
+      "skeleton": [
+        {
+          "kind": "heading",
+          "key": "h:1:{{code}}",
+          "level": 1,
+          "text": "{{code}}",
+          "lines": [
+            "# {{code}}"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:date",
+          "name": "Date",
+          "lines": [
+            "**Date**:: **{{date}}**"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:id1",
+          "name": "id1",
+          "lines": [
+            "**id1**:: 00"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:description",
+          "name": "Description",
+          "lines": [
+            "**Description**::"
+          ]
+        },
+        {
+          "kind": "heading",
+          "key": "h:2:table",
+          "level": 2,
+          "text": "Table",
+          "lines": [
+            "## Table"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:yield",
+          "name": "yield",
+          "lines": [
+            "**yield**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:mass",
+          "name": "mass",
+          "lines": [
+            "**mass**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:scale",
+          "name": "scale",
+          "lines": [
+            "**scale**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:temperature",
+          "name": "temperature",
+          "lines": [
+            "**temperature**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:time",
+          "name": "time",
+          "lines": [
+            "**time**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:atmosphere",
+          "name": "atmosphere",
+          "lines": [
+            "**atmosphere**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:other",
+          "name": "other",
+          "lines": [
+            "**other**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:mw",
+          "name": "MW",
+          "lines": [
+            "**MW**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:state",
+          "name": "state",
+          "lines": [
+            "**state**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:num_in_article",
+          "name": "num_in_article",
+          "lines": [
+            "**num_in_article**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:roles",
+          "name": "roles",
+          "lines": [
+            "**roles**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:needed",
+          "name": "needed",
+          "lines": [
+            "**needed**::NMR, mass, yield"
+          ]
+        },
+        {
+          "kind": "heading",
+          "key": "h:2:procedure {{code}}",
+          "level": 2,
+          "text": "Procedure {{code}}",
+          "lines": [
+            "## Procedure {{code}}"
+          ]
+        },
+        {
+          "kind": "heading",
+          "key": "h:2:tlc",
+          "level": 2,
+          "text": "TLC",
+          "lines": [
+            "## TLC"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:workup",
+          "name": "workup",
+          "lines": [
+            "**workup**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:eluent",
+          "name": "eluent",
+          "lines": [
+            "**eluent**::"
+          ]
+        },
+        {
+          "kind": "table",
+          "key": "t:tlc",
+          "word": "TLC",
+          "lines": [
+            "| TLC eluent EtOAc/Hex= : | after cc |     |",
+            "| ----------------------- | -------- | --- |",
+            "|                         |          |     |",
+            "|                         |          |     |"
+          ]
+        },
+        {
+          "kind": "heading",
+          "key": "h:2:characterization",
+          "level": 2,
+          "text": "Characterization",
+          "lines": [
+            "## Characterization"
+          ]
+        },
+        {
+          "kind": "heading",
+          "key": "h:4:nmr",
+          "level": 4,
+          "text": "NMR",
+          "lines": [
+            "#### NMR"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:nmr_id",
+          "name": "NMR_id",
+          "lines": [
+            "**NMR_id**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:solvent",
+          "name": "solvent",
+          "lines": [
+            "**solvent**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:frequency",
+          "name": "frequency",
+          "lines": [
+            "**frequency**::"
+          ]
+        },
+        {
+          "kind": "block",
+          "key": "b:meta-bind-button:label: Add NMR",
+          "lines": [
+            "```meta-bind-button",
+            "label: Add NMR",
+            "style: primary",
+            "action:",
+            "  type: command",
+            "  command: templater-obsidian:Templates/add_nmr.md",
+            "```"
+          ]
+        },
+        {
+          "kind": "block",
+          "key": "b:meta-bind-button:label: Open in TopSpin",
+          "lines": [
+            "```meta-bind-button",
+            "label: Open in TopSpin",
+            "style: default",
+            "action:",
+            "  type: command",
+            "  command: nmr-downloader:open-note-in-topspin",
+            "```"
+          ]
+        },
+        {
+          "kind": "heading",
+          "key": "h:4:ms",
+          "level": 4,
+          "text": "MS",
+          "lines": [
+            "#### MS"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:mass_id",
+          "name": "Mass_id",
+          "lines": [
+            "**Mass_id**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:mass_ionization",
+          "name": "Mass_Ionization",
+          "lines": [
+            "**Mass_Ionization**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:mass_pic",
+          "name": "Mass_pic",
+          "lines": [
+            "**Mass_pic**::"
+          ]
+        },
+        {
+          "kind": "block",
+          "key": "b:meta-bind-button:label: Add Mass",
+          "lines": [
+            "```meta-bind-button",
+            "label: Add Mass",
+            "style: primary",
+            "action:",
+            "  type: command",
+            "  command: templater-obsidian:Templates/add_mass.md",
+            "```"
+          ]
+        },
+        {
+          "kind": "heading",
+          "key": "h:4:x-ray",
+          "level": 4,
+          "text": "X-Ray",
+          "lines": [
+            "#### X-Ray"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:xraydesc",
+          "name": "xraydesc",
+          "lines": [
+            "**xraydesc**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:files",
+          "name": "files",
+          "lines": [
+            "**files**::"
+          ]
+        },
+        {
+          "kind": "heading",
+          "key": "h:2:description",
+          "level": 2,
+          "text": "Description",
+          "lines": [
+            "## Description"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:nmr_description",
+          "name": "nmr_description",
+          "lines": [
+            "nmr_description::n"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:name",
+          "name": "Name",
+          "lines": [
+            "**Name**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:pic",
+          "name": "pic",
+          "lines": [
+            "**pic**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:hnmr",
+          "name": "HNMR",
+          "lines": [
+            "**HNMR**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:cnmr",
+          "name": "CNMR",
+          "lines": [
+            "**CNMR**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:fnmr",
+          "name": "FNMR",
+          "lines": [
+            "**FNMR**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:pnmr",
+          "name": "PNMR",
+          "lines": [
+            "**PNMR**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:sinmr",
+          "name": "SiNMR",
+          "lines": [
+            "**SiNMR**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:dnmr",
+          "name": "DNMR",
+          "lines": [
+            "**DNMR**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:bnmr",
+          "name": "BNMR",
+          "lines": [
+            "**BNMR**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:15nnmr",
+          "name": "15NNMR",
+          "lines": [
+            "**15NNMR**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:hrms",
+          "name": "HRMS",
+          "lines": [
+            "**HRMS**::"
+          ]
+        },
+        {
+          "kind": "block",
+          "key": "b:meta-bind-button:label: Finish",
+          "lines": [
+            "```meta-bind-button",
+            "label: Finish",
+            "style: primary",
+            "action:",
+            "  type: command",
+            "  command: templater-obsidian:Templates/finish_note.md",
+            "```"
+          ]
+        },
+        {
+          "kind": "html",
+          "key": "x:<div style=\"page-break-after: always;\"></div>",
+          "lines": [
+            "<div style=\"page-break-after: always;\"></div>"
+          ]
+        }
+      ],
+      "templateSkeleton": [
+        {
+          "kind": "heading",
+          "key": "h:1:{{code}}",
+          "level": 1,
+          "text": "{{code}}",
+          "lines": [
+            "# {{code}}"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:date",
+          "name": "Date",
+          "lines": [
+            "**Date**:: **{{date}}**"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:id1",
+          "name": "id1",
+          "lines": [
+            "**id1**:: 00"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:description",
+          "name": "Description",
+          "lines": [
+            "**Description**::"
+          ]
+        },
+        {
+          "kind": "heading",
+          "key": "h:2:table",
+          "level": 2,
+          "text": "Table",
+          "lines": [
+            "## Table"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:yield",
+          "name": "yield",
+          "lines": [
+            "**yield**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:mass",
+          "name": "mass",
+          "lines": [
+            "**mass**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:scale",
+          "name": "scale",
+          "lines": [
+            "**scale**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:temperature",
+          "name": "temperature",
+          "lines": [
+            "**temperature**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:time",
+          "name": "time",
+          "lines": [
+            "**time**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:atmosphere",
+          "name": "atmosphere",
+          "lines": [
+            "**atmosphere**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:other",
+          "name": "other",
+          "lines": [
+            "**other**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:mw",
+          "name": "MW",
+          "lines": [
+            "**MW**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:state",
+          "name": "state",
+          "lines": [
+            "**state**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:num_in_article",
+          "name": "num_in_article",
+          "lines": [
+            "**num_in_article**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:roles",
+          "name": "roles",
+          "lines": [
+            "**roles**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:needed",
+          "name": "needed",
+          "lines": [
+            "**needed**::NMR, mass, yield"
+          ]
+        },
+        {
+          "kind": "heading",
+          "key": "h:2:procedure {{code}}",
+          "level": 2,
+          "text": "Procedure {{code}}",
+          "lines": [
+            "## Procedure {{code}}"
+          ]
+        },
+        {
+          "kind": "heading",
+          "key": "h:2:tlc",
+          "level": 2,
+          "text": "TLC",
+          "lines": [
+            "## TLC"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:workup",
+          "name": "workup",
+          "lines": [
+            "**workup**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:eluent",
+          "name": "eluent",
+          "lines": [
+            "**eluent**::"
+          ]
+        },
+        {
+          "kind": "table",
+          "key": "t:tlc",
+          "word": "TLC",
+          "lines": [
+            "| TLC eluent EtOAc/Hex= : | after cc |     |",
+            "| ----------------------- | -------- | --- |",
+            "|                         |          |     |",
+            "|                         |          |     |"
+          ]
+        },
+        {
+          "kind": "heading",
+          "key": "h:2:characterization",
+          "level": 2,
+          "text": "Characterization",
+          "lines": [
+            "## Characterization"
+          ]
+        },
+        {
+          "kind": "heading",
+          "key": "h:4:nmr",
+          "level": 4,
+          "text": "NMR",
+          "lines": [
+            "#### NMR"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:nmr_id",
+          "name": "NMR_id",
+          "lines": [
+            "**NMR_id**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:solvent",
+          "name": "solvent",
+          "lines": [
+            "**solvent**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:frequency",
+          "name": "frequency",
+          "lines": [
+            "**frequency**::"
+          ]
+        },
+        {
+          "kind": "block",
+          "key": "b:meta-bind-button:label: Add NMR",
+          "lines": [
+            "```meta-bind-button",
+            "label: Add NMR",
+            "style: primary",
+            "action:",
+            "  type: command",
+            "  command: templater-obsidian:Templates/add_nmr.md",
+            "```"
+          ]
+        },
+        {
+          "kind": "block",
+          "key": "b:meta-bind-button:label: Open in TopSpin",
+          "lines": [
+            "```meta-bind-button",
+            "label: Open in TopSpin",
+            "style: default",
+            "action:",
+            "  type: command",
+            "  command: nmr-downloader:open-note-in-topspin",
+            "```"
+          ]
+        },
+        {
+          "kind": "heading",
+          "key": "h:4:ms",
+          "level": 4,
+          "text": "MS",
+          "lines": [
+            "#### MS"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:mass_id",
+          "name": "Mass_id",
+          "lines": [
+            "**Mass_id**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:mass_ionization",
+          "name": "Mass_Ionization",
+          "lines": [
+            "**Mass_Ionization**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:mass_pic",
+          "name": "Mass_pic",
+          "lines": [
+            "**Mass_pic**::"
+          ]
+        },
+        {
+          "kind": "block",
+          "key": "b:meta-bind-button:label: Add Mass",
+          "lines": [
+            "```meta-bind-button",
+            "label: Add Mass",
+            "style: primary",
+            "action:",
+            "  type: command",
+            "  command: templater-obsidian:Templates/add_mass.md",
+            "```"
+          ]
+        },
+        {
+          "kind": "heading",
+          "key": "h:4:x-ray",
+          "level": 4,
+          "text": "X-Ray",
+          "lines": [
+            "#### X-Ray"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:xraydesc",
+          "name": "xraydesc",
+          "lines": [
+            "**xraydesc**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:files",
+          "name": "files",
+          "lines": [
+            "**files**::"
+          ]
+        },
+        {
+          "kind": "heading",
+          "key": "h:2:description",
+          "level": 2,
+          "text": "Description",
+          "lines": [
+            "## Description"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:nmr_description",
+          "name": "nmr_description",
+          "lines": [
+            "nmr_description::n"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:name",
+          "name": "Name",
+          "lines": [
+            "**Name**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:pic",
+          "name": "pic",
+          "lines": [
+            "**pic**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:hnmr",
+          "name": "HNMR",
+          "lines": [
+            "**HNMR**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:cnmr",
+          "name": "CNMR",
+          "lines": [
+            "**CNMR**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:fnmr",
+          "name": "FNMR",
+          "lines": [
+            "**FNMR**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:pnmr",
+          "name": "PNMR",
+          "lines": [
+            "**PNMR**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:sinmr",
+          "name": "SiNMR",
+          "lines": [
+            "**SiNMR**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:dnmr",
+          "name": "DNMR",
+          "lines": [
+            "**DNMR**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:bnmr",
+          "name": "BNMR",
+          "lines": [
+            "**BNMR**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:15nnmr",
+          "name": "15NNMR",
+          "lines": [
+            "**15NNMR**::"
+          ]
+        },
+        {
+          "kind": "field",
+          "key": "f:hrms",
+          "name": "HRMS",
+          "lines": [
+            "**HRMS**::"
+          ]
+        },
+        {
+          "kind": "block",
+          "key": "b:meta-bind-button:label: Finish",
+          "lines": [
+            "```meta-bind-button",
+            "label: Finish",
+            "style: primary",
+            "action:",
+            "  type: command",
+            "  command: templater-obsidian:Templates/finish_note.md",
+            "```"
+          ]
+        },
+        {
+          "kind": "html",
+          "key": "x:<div style=\"page-break-after: always;\"></div>",
+          "lines": [
+            "<div style=\"page-break-after: always;\"></div>"
+          ]
+        }
+      ]
+    }
+  }
+}

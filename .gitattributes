@@ -1,0 +1,16 @@
+# Keep redistributed plugin builds byte-identical to the upstream releases
+.obsidian/plugins/** -text
+
+# Binary laboratory data and archives
+*.cdx binary
+*.mnova binary
+*.zip binary
+*.xlsx binary
+*.pdf binary
+
+# Not part of the downloaded vault (GitHub's Download ZIP and the release archive)
+.github export-ignore
+
+# Exclude bundled third-party builds from GitHub language statistics
+.obsidian/plugins/** linguist-vendored
+THIRD_PARTY_LICENSES/** linguist-vendored

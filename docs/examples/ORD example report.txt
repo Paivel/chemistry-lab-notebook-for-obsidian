@@ -1,0 +1,21 @@
+IM_00 example tags — IM_00.cdxml: exported
+  roles: C13H8O = reactant (limiting reagent); C14H14O2P2S4 = unspecified (default role); toluene = solvent (role in the reagent table of the file (Reactio Draw)); C26H16 = product (right of the arrow (desired product))
+  time: "12 h" from the reaction file (caption); no time:: value in the note
+  temperature: "Reflux" from the reaction file (caption); no temperature:: value in the note
+  atmosphere: "Air" from the reaction file (caption); no atmosphere:: value in the note
+IM_1 Cl acenaphthene — IM_1.cdxml: exported with warnings
+  warning: no reaction time (time:: field)
+  warning: temperature "-10 to rt" kept as text (not a single value)
+  roles: C24H16Cl2F6N3P = reactant (limiting reagent); THF = solvent (role in the reagent table of the file (Reactio Draw)); MeMgBr = reactant (roles:: line in the note); C6H8O7 = workup (roles:: line in the note (workup step ADDITION)); C25H19Cl2N3 = product (right of the arrow (desired product))
+  temperature: "-10 to rt" from the reaction file (caption); no temperature:: value in the note
+  atmosphere: "N2" from the reaction file (caption); no atmosphere:: value in the note
+  not recorded (left out of the record): reaction time
+  purification exported as a CUSTOM workup step ("flash filtration through neutral aluminum oxide; eluent: EtOAc/hexane, from 1:10 to 1:6"); write workup:: flash chromatography in the note for FLASH_CHROMATOGRAPHY
+IM_2 CF3 cyclohexene — IM_2.cdxml: exported with warnings
+  warning: no reaction time (time:: field)
+  warning: temperature "-10 to rt" kept as text (not a single value)
+  roles: C20H18F12N3P = reactant (limiting reagent); THF = solvent (role in the reagent table of the file (Reactio Draw)); MeMgBr = reactant (roles:: line in the note); C6H8O7 = workup (roles:: line in the note (workup step ADDITION)); C21H21F6N3 = product (right of the arrow (desired product))
+  temperature: "-10 to rt" from the reaction file (caption); no temperature:: value in the note
+  atmosphere: "N2" from the reaction file (caption); no atmosphere:: value in the note
+  not recorded (left out of the record): reaction time
+  purification exported as a CUSTOM workup step ("flash filtration through neutral aluminum oxide; eluent: EtOAc/hexane, from 1:10 to 1:6"); write workup:: flash chromatography in the note for FLASH_CHROMATOGRAPHY

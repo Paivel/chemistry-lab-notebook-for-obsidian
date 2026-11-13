@@ -1,0 +1,37 @@
+/* === Nature-like headings === */
+
+/* Light theme */
+body.theme-light {
+  --h1-color: #1a1a1a; /* almost black */
+  --h2-color: #1f5fa8; /* signature scientific blue */
+}
+
+/* Dark theme */
+body.theme-dark {
+  --h1-color: #e6e6e6; /* soft white */
+  --h2-color: #6ea8fe; /* cool light blue */
+}
+
+/* Apply colors (Reading + Live Preview) */
+.markdown-rendered h1,
+.HyperMD-header-1 {
+  color: var(--h1-color) !important;
+}
+
+.markdown-rendered h2,
+.HyperMD-header-2 {
+  color: var(--h2-color) !important;
+}
+
+/* Underline below H2 in both Reading and Live Preview */
+
+.markdown-rendered h2 {
+  border-bottom: 1px solid var(--h2-color);
+  padding-bottom: 2px;
+}
+
+/* Live Preview */
+.HyperMD-header-2 {
+  border-bottom: 1px solid var(--h2-color);
+  padding-bottom: 2px;
+}

@@ -1,0 +1,9 @@
+{
+  "id": "kanban-day-planner",
+  "name": "Kanban Day Planner",
+  "version": "0.1.1",
+  "minAppVersion": "1.5.0",
+  "description": "Keeps a Kanban board as a day planner: a list for each day ahead, a weekly cycle that moves unfinished tasks to Unsorted with a tag, and a Today panel.",
+  "author": "Pavel Sakharov",
+  "isDesktopOnly": false
+}

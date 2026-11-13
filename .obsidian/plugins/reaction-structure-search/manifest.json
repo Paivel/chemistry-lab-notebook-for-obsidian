@@ -1,0 +1,9 @@
+{
+  "id": "reaction-structure-search",
+  "name": "Reaction Structure Search",
+  "version": "1.9.10",
+  "minAppVersion": "1.5.0",
+  "description": "Search ChemDraw reaction journals by structure or reaction drawn in Reactio Draw, export reactions as Open Reaction Database (ORD) datasets, and prepare PubChem deposition files for the products of a paper.",
+  "author": "Pavel Sakharov",
+  "isDesktopOnly": true
+}

@@ -1,0 +1,247 @@
+{
+  "main": {
+    "id": "9bdb23ac8e2f78f0",
+    "type": "split",
+    "children": [
+      {
+        "id": "f37964b7f1da782d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "88ca5cd2516a2546",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Welcome note.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Welcome note"
+            }
+          },
+          {
+            "id": "cd2f509be31216f6",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Journal/Example/IM/Finished/IM_2 CF3 cyclohexene.md",
+                "mode": "preview",
+                "source": true
+              },
+              "icon": "lucide-file",
+              "title": "IM_2 CF3 cyclohexene"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "2692ce9b955b6fff",
+    "type": "split",
+    "children": [
+      {
+        "id": "d7c0c4ddeae496d6",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "48198880aa2bcc95",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "e66f707de7e21f96",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "9f449700d5ffc9bf",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "016522977d849ba5",
+    "type": "split",
+    "children": [
+      {
+        "id": "d9f509aa9f7d2f49",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "19ed36865164b9ee",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "662f081dece29d13",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "362de2fcbe9131aa",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "95bebbfa0b9fb1c6",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          },
+          {
+            "id": "eee06fe1c6678c6a",
+            "type": "leaf",
+            "state": {
+              "type": "reminder-list",
+              "state": {},
+              "icon": "lucide-ghost",
+              "title": "reminder-list"
+            }
+          },
+          {
+            "id": "2e28140ff0402273",
+            "type": "leaf",
+            "state": {
+              "type": "kanban-today-view",
+              "state": {},
+              "icon": "calendar-check",
+              "title": "Today's Kanban Tasks"
+            }
+          }
+        ],
+        "currentTab": 5
+      },
+      {
+        "id": "952d04e617dcd980",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c24570726503955d",
+            "type": "leaf",
+            "state": {
+              "type": "chronology-calendar-view",
+              "state": {},
+              "icon": "clock",
+              "title": "Chronology"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "zk-prefixer:Create new unique note": false,
+      "bases:Create new base": false,
+      "templater-obsidian:Templater": false,
+      "cmdr:Templater: Insert Templates/dataview SerializedQuery.md": false,
+      "cmdr:Kanban Day Planner: Run Kanban maintenance now": false,
+      "cmdr:Kanban Day Planner: Hide both sidebars": false,
+      "cmdr:Kanban Day Planner: Show both sidebars": false,
+      "cmdr:Templater: Insert Templates/add project.md": false,
+      "cmdr:QuickAdd: EXP_": false,
+      "cmdr:Templater: Insert report Exp_": false,
+      "cmdr:Reaction Structure Search: Export ORD dataset from current table": false,
+      "chronology-custom:Open Chronology": false,
+      "webpage-html-export:Export as HTML": false,
+      "clear-unused-images-plus:Clear unused images": false,
+      "obsidian-kanban:Create new board": false,
+      "quickadd:QuickAdd": false,
+      "chemistry-word-report:Generate chemistry Word report": false,
+      "reaction-structure-search:Search reaction journal (draw the query in Reactio Draw)": false,
+      "nmr-downloader:Download NMR spectra": false,
+      "reactio-draw:Reactio Draw": false,
+      "completed-task-display:Task Hider": false
+    }
+  },
+  "active": "cd2f509be31216f6",
+  "lastOpenFiles": []
+}

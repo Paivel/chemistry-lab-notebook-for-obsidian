@@ -1,0 +1,25 @@
+# Operating-system files
+.DS_Store
+Thumbs.db
+desktop.ini
+__MACOSX/
+
+# Obsidian local state
+.obsidian/workspace-mobile.json
+.obsidian/cache/
+.obsidian/plugins/nmr-downloader/data.json
+
+# Locally generated data
+# Reactio Draw's page: the reactio-draw plugin writes it from its main.js on first use
+.obsidian/plugins/reactio-draw/reactio/reactio.html
+Export/
+.reaction-index/
+.trash/
+**/__pycache__/
+*.py[cod]
+
+# Temporary and backup files
+*.tmp
+*.temp
+*.bak
+*~

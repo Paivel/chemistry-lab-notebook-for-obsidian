@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "triggerFile": "Stat/Plan Kanban.md",
+  "daysAhead": 14,
+  "cycleStartDay": 6,
+  "hideLeftSidebar": true,
+  "hideRightSidebar": true,
+  "firstRollbackTag": "#notnow",
+  "repeatedRollbackTag": "#forgotten",
+  "showJournalButtons": true,
+  "nmrJournalPath": "Stat/NMR Journal.md",
+  "massJournalPath": "Stat/Mass Journal.md"
+}

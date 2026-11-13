@@ -1,0 +1,5 @@
+.fixed-images-200 img {
+  max-width: 200px !important;
+  width: 200px !important;
+  height: auto !important;
+}

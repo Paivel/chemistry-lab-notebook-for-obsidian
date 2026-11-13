@@ -1,0 +1,4 @@
+ord-schema validation, 2026-10-22
+validator: ord-schema 0.9.6 with RDKit 2026.09.1 (pip install ord-schema rdkit)
+ord-schema 0.9.6, RDKit 2026.09.1, file ORD example dataset.json: 3 reactions, 0 errors, 0 warnings
+ord-schema 0.9.6, RDKit 2026.09.1, file ORD example dataset.pbtxt: 3 reactions, 0 errors, 0 warnings

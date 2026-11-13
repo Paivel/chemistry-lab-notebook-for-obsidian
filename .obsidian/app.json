@@ -1,0 +1,20 @@
+{
+  "newFileLocation": "current",
+  "newFileFolderPath": "check",
+  "attachmentFolderPath": "Files",
+  "pdfExportSettings": {
+    "includeName": false,
+    "pageSize": "A4",
+    "landscape": true,
+    "margin": "0",
+    "downscalePercent": 68
+  },
+  "showLineNumber": false,
+  "alwaysUpdateLinks": true,
+  "readableLineLength": true,
+  "showInlineTitle": false,
+  "userIgnoreFilters": [
+    "Files/"
+  ],
+  "spellcheck": false
+}

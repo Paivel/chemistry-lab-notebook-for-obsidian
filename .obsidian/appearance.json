@@ -1,0 +1,15 @@
+{
+  "cssTheme": "",
+  "theme": "moonstone",
+  "accentColor": "#45a14b",
+  "baseFontSize": 17,
+  "enabledCssSnippets": [
+    "MCL Wide Views",
+    "MCL Multi Column",
+    "header color",
+    "fixed-images-200",
+    "embed-adjustments"
+  ],
+  "showViewHeader": true,
+  "showRibbon": true
+}

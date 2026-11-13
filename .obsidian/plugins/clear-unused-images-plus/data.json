@@ -1,0 +1,15 @@
+{
+  "deleteOption": "trash",
+  "logsModal": true,
+  "excludedFolders": "docs, Files/telegram",
+  "excludedExtensions": "",
+  "ribbonIcon": true,
+  "excludeSubfolders": true,
+  "autoCleanOnVaultLoad": false,
+  "autoCleanEveryXMinutes": false,
+  "autoCleanIntervalMinutes": 15,
+  "clearEmptyFoldersAfterImageCleanup": false,
+  "reviewImageFolderCleanup": true,
+  "imageFolderRules": "",
+  "attachmentFolderSuffixes": ""
+}

@@ -1,0 +1,10 @@
+{
+  "telegramFolder": "Telegram",
+  "journalFolder": "Journal",
+  "imageWidth": 150,
+  "askBeforeInsert": true,
+  "botEnabled": false,
+  "imageFolder": "Files",
+  "inboxFolder": "Files/telegram",
+  "defaultProject": ""
+}

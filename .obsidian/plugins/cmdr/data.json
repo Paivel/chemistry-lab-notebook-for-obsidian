@@ -1,0 +1,98 @@
+{
+  "confirmDeletion": false,
+  "showAddCommand": true,
+  "debug": false,
+  "editorMenu": [],
+  "fileMenu": [],
+  "leftRibbon": [
+    {
+      "id": "templater-obsidian:Templates/dataview SerializedQuery.md",
+      "icon": "lucide-archive",
+      "name": "Templater: Insert Templates/dataview SerializedQuery.md",
+      "mode": "any",
+      "color": "#000000"
+    },
+    {
+      "id": "kanban-day-planner:run-kanban-maintenance-now",
+      "icon": "lucide-air-vent",
+      "name": "Kanban Day Planner: Run Kanban maintenance now",
+      "mode": "any"
+    },
+    {
+      "id": "kanban-day-planner:hide-both-sidebars",
+      "icon": "lucide-airplay",
+      "name": "Kanban Day Planner: Hide both sidebars",
+      "mode": "any"
+    },
+    {
+      "id": "kanban-day-planner:show-both-sidebars",
+      "icon": "lucide-align-horizontal-justify-center",
+      "name": "Kanban Day Planner: Show both sidebars",
+      "mode": "any"
+    },
+    {
+      "id": "templater-obsidian:Templates/add project.md",
+      "icon": "lucide-a-large-small",
+      "name": "Templater: Insert Templates/add project.md",
+      "mode": "any"
+    },
+    {
+      "id": "quickadd:choice:12bf836f-eb0c-44d1-8556-41a3cf7c89b2",
+      "icon": "lucide-activity",
+      "name": "QuickAdd: EXP_",
+      "mode": "any",
+      "color": "#ff0000"
+    },
+    {
+      "id": "templater-obsidian:Templates/report Exp_.md",
+      "icon": "lucide-arrow-big-down",
+      "name": "Templater: Insert report Exp_",
+      "mode": "any",
+      "color": "#0033ff"
+    },
+    {
+      "id": "reaction-structure-search:ord-export-table",
+      "icon": "lucide-arrow-down-circle",
+      "name": "Reaction Structure Search: Export ORD dataset from current table",
+      "mode": "any"
+    }
+  ],
+  "rightRibbon": [],
+  "titleBar": [],
+  "statusBar": [],
+  "pageHeader": [],
+  "macros": [],
+  "explorer": [],
+  "textToolbarCommands": [],
+  "hide": {
+    "statusbar": [],
+    "leftRibbon": [
+      "QuickAdd",
+      "Open Chronology",
+      "Templater",
+      "Create new drawing",
+      "Create new board",
+      "Open quick switcher",
+      "Open graph view",
+      "Create new canvas",
+      "Open today's daily note",
+      "Insert template",
+      "Open command palette",
+      "Create new unique note"
+    ],
+    "editorMenuItems": [],
+    "fileMenuItems": []
+  },
+  "spacing": "8",
+  "advancedToolbar": {
+    "rowHeight": 48,
+    "rowCount": 1,
+    "spacing": 0,
+    "buttonWidth": 48,
+    "columnLayout": false,
+    "mappedIcons": [],
+    "tooltips": false,
+    "heightOffset": 0
+  },
+  "spacingReset": true
+}

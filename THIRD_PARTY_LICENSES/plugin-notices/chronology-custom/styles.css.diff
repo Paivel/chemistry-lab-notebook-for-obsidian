@@ -1,0 +1,551 @@
+--- a/styles.css (Chronology 1.1.14 release)
++++ b/styles.css (Chronology Custom)
+@@ -1,12 +1,3 @@
+-/*
+-
+-This CSS file will be included with your plugin, and
+-available in the app when your plugin is enabled.
+-
+-If your plugin does not need CSS, delete this file.
+-
+-*/
+-
+ .chronology-container {
+     display: flex;
+     flex-direction: column;
+@@ -14,14 +5,10 @@
+     height: 100%;
+ }
+ 
+-.chronology-cell-other-month {}
+-
+ .chronology-calendar-box {
+     font-size: smaller;
+     max-width: 20em;
+     flex: 0;
+-
+-
+ }
+ 
+ .chronology-calendar-box table.chronology-calendar-grid {
+@@ -30,7 +17,6 @@
+ 
+ .chronology-calendar-grid {
+     border-collapse: collapse;
+-    /* border: 1px solid white; */
+ }
+ 
+ .chronology-calendar-grid td,
+@@ -42,25 +28,18 @@
+     text-align: center;
+ }
+ 
+-
+-
+ .chronology-calendar-weeknumber {
+     color: var(--text-faint);
+-    /* font-weight: bold; */
++    display: none !important;
+ }
+ 
+ .chronology-selected .chronology-calendar-weeknumber {
+-
+     color: var(--text-normal);
+ }
+ 
+ .chronology-calendar-day {
+     position: relative;
+-}
+-
+-.chronology-calendar-day:hover {
+-    /* text-decoration: underline; */
+-
++    overflow: hidden;
+ }
+ 
+ .chronology-calendar-selectable:hover {
+@@ -68,254 +47,308 @@
+     cursor: pointer;
+ }
+ 
++.chronology-calendar-today {
++    font-weight: 800;
++}
+ 
+-.chronology-calendar-day.chronology-selected, 
+-.chronology-calendar-week-row.chronology-selected {
+-    /* content: ''; */
+-    /* display: block;
+-    position: absolute;
+-    width: 100%;
+-    height: 100%;
+-    top: 0; */
++.chronology-calendar-todaylink {
++    color: var(--text-muted);
++}
+ 
+-    /* opacity: 0.25; */
+-    /* background-color: var(--text-accent-hover); */
+-    /* background-color: var(--theme-color-translucent-01); */
+-    background-color: var(--interactive-accent-hover);
++.chronology-other-month {
++    color: var(--text-faint);
++}
+ 
+-    /* --theme-color-translucent-01 */
++.chronology-grid-dayofweek {
++    color: #7f8c7a;
+ }
+ 
+ 
+ 
+-.chronology-cell-month {}
+ 
+-.chronology-calendar-heat-background {
+-    position: absolute;
+-    bottom: 0px;
+-    background-color: var(--background-modifier-border);
+-    width: 100%;
+-    z-index: -1;
++.chronology-calendar-chevron {
++    color: #000000;
++    cursor: var(--cursor);
++    border-radius: 4px;
+ }
+ 
+-.chronology-calendar-today {
+-    /* outline-style:  solid;
+-	outline-color:  var(--interactive-accent); */
+-
+-    font-weight: 800;
++.chronology-calendar-chevron:hover {
++    color: #000000;
+ }
+ 
+-.chronology-calendar-todaylink {
+-    color: var(--text-muted);
++.chevron::before {
++	border-style: solid;
++	border-width: 0.25em 0.25em 0 0;
++	content: '';
++	display: inline-block;
++	height: 0.45em;
++	left: 0.15em;
++	position: relative;
++	top: 0.15em;
++	transform: rotate(-45deg);
++	/* vertical-align: top; */
++	width: 0.45em;
+ }
+ 
++.chevron.right:before {
++	left: 0;
++	transform: rotate(45deg);
++}
+ 
+-.chronology-other-month {
+-    color: var(--text-muted);
++.chevron.bottom:before {
++	top: 0;
++	transform: rotate(135deg);
+ }
+ 
++.chevron.left:before {
++	left: 0.25em;
++	transform: rotate(-135deg);
++}
++.chronology-calendar-grid thead tr:nth-child(2) th:first-child,
++.chronology-calendar-grid tbody tr td:first-child {
++    display: none !important;
++}
+ 
++.chronology-calendar-grid thead tr:first-child th {
++    max-width: calc(100% * 5 / 6) !important;
++    margin: 0 auto !important;
++    display: table-cell !important;
++}
+ 
++.chronology-calendar-grid thead tr:first-child th {
++    
++    margin: 0 auto !important;
++    display: table-cell !important;
++}
+ 
+-.chronology-grid-dayofweek {
+-    color: var(--text-faint);
+-    /* color:  var(--interactive-accent); */
++/* only month/year text in the center cell */
++.chronology-calendar-grid thead tr:first-child th[colspan="5"] span {
++    font-size: 18px;
++    font-weight: 700;
++    font-family: var(--font-interface);
+ }
+ 
+-.chronology-timeline-container {
+-    overflow-y: auto;
+-    flex: 1;
+-    /* display: flex; */
+-    /* flex-direction: column; */
+-    width: 100%;
+-    padding-right: 3pt;
+-    margin-top: 10pt;
++.chronology-calendar-grid thead tr:first-child th[colspan="5"] span:first-of-type {
++    color: var(--text-normal);
++    margin-right: 0.22em;
+ }
+ 
+-.chrono-temp-slot1 {
+-    display: flex;
+-    height: 157px;
+-    overflow-y: hidden;
++
++
++.chronology-calendar-grid thead tr:first-child th span:first-of-type {
++    color: var(--text-normal);
++    margin-right: 0.22em;
+ }
+ 
+-.chrono-temp-slot1-info {
+-    /* grid-column: 1; */
+-    border-right: 1px solid var(--background-modifier-border);
+-    border-top: 1px solid var(--background-modifier-border);
+-    flex: 0 0 64px;
+-    display: flex;
+-    flex-direction: column;
+-    align-items: flex-end;
+-    justify-content: flex-end;
++
++
++.chronology-calendar-grid thead tr:first-child th:has(span[data-scheme="nature"]) span:last-child,
++.chronology-calendar-grid thead tr:first-child th[data-scheme="nature"] span:last-child {
++    color: var(--color-green) !important;
+ }
+ 
+-.chrono-temp-slot1-name {
+-    margin-right: 5pt;
++.chronology-calendar-grid:has(.chronology-heat-level) {
++    border-collapse: separate !important;
++    border-spacing: 6px !important;
+ }
+ 
+-.chrono-temp-slot1-content {
+-    border-top: 1px solid var(--background-modifier-border);
+-    flex: 1;
+-    margin-left: 2pt;
+-    /* margin-top: 5pt; */
+-    /* display: flex; */
+-    /* flex-direction: column; */
+-    /* justify-content: flex-end; */
+-    overflow-y: auto;
+-    
+-    overflow-x: hidden;
+-    padding: 2px;
++.chronology-calendar-grid:has(.chronology-heat-level) td,
++.chronology-calendar-grid:has(.chronology-heat-level) th {
++    border: none !important;
+ }
+ 
+-.chrono-cluster-container {
+-    min-height: 25px;;
++.chronology-calendar-day.chronology-heat-level {
++    border-radius: 8px;
+ }
+ 
+-.chrono-temp-note {
+-    color: var(--text-muted);
++.chronology-calendar-day span {
+     position: relative;
+-    padding: 1px;
+-    white-space: nowrap;
+-    text-overflow: ellipsis;
+-    overflow: hidden;
+-    font-size: 14px;
++    z-index: 3;
++    font-weight: 500;
+ }
+ 
+-.commented-chrono-temp-note:before {
+-    content: attr(data-text);
+-    /* here's the magic */
++.chronology-calendar-heat-background {
+     position: absolute;
++    z-index: 1;
++    background-color: transparent;
++}
+ 
+-    /* vertically center */
+-    top: 0%;
+-    left: 0px;
+-    transform: translateY(-100%);
+-
+-    /* move to right */
+-
+-    /* right: 100%; */
+-    margin-left: 5px;
+-    /* and add a small left margin */
+-
+-    /* basic styles */
+-    width: 200px;
+-    padding: 10px;
+-    border-radius: 10px;
+-    background: var(--background-secondary-alt);
+-    color: var(--text-normal);
+-    text-align: center;
++.chronology-calendar-day.chronology-selected::before {
++    content: "";
++    position: absolute;
++    inset: 0;
++    z-index: 2;
++    pointer-events: none;
++}
+ 
+-    display: none;
+-    /* hide by default */
++.chronology-calendar-day.chronology-heat-level .chronology-calendar-heat-background {
++    inset: 2px;
++    border-radius: 8px;
+ }
+ 
+-.commented-chrono-temp-note:hover:before {
+-    display: block;
++.chronology-calendar-day.chronology-heat-percent .chronology-calendar-heat-background {
++    inset: 0;
++    background: transparent !important;
+ }
+ 
++.chronology-calendar-day.chronology-heat-percent .chronology-calendar-heat-background::after {
++    content: "";
++    position: absolute;
++    inset-inline: 0;
++    bottom: 0;
++    height: var(--heat);
++    background-color: #b7d3b0;
++}
+ 
+-.chronology-noteslist-container {
+-    margin-top: 10px;
+-    margin-bottom: 10px;
+-    height: 100%;
+-    width: 100%;
+-   
+-    overflow-y: auto;
+-    overflow-x: hidden;
++.chronology-calendar-day.chronology-heat-level.chronology-heat-0 .chronology-calendar-heat-background {
++    background-color: transparent !important;
+ }
+-.chronology-noteslist-container .chronology-noteslist-wrapper {
+-    display: flex;
+-    flex-direction: column;
+-    
++
++.chronology-calendar-day.chronology-heat-level.chronology-heat-1 .chronology-calendar-heat-background {
++    background-color: #edf5e8 !important;
+ }
+ 
+-.chronology-noteslist-container .chronology-noteslist-wrapper .chrono-temp-note {
+-    margin-top: 3px;
++.chronology-calendar-day.chronology-heat-level.chronology-heat-2 .chronology-calendar-heat-background {
++    background-color: #dbead5 !important;
+ }
+ 
+-.chrono-temp-note:hover {
+-    background-color: var(--background-secondary-alt);
+-    color: var(--text-normal);
+-    cursor: pointer;
++.chronology-calendar-day.chronology-heat-level.chronology-heat-3 .chronology-calendar-heat-background {
++    background-color: #b7d3b0 !important;
+ }
+ 
+-.chrono-badge {
+-    display: inline-block;
+-    margin-right: 2pt;
+-    margin-left: 2pt;
+-    border-radius: 50%;
+-    width: 8pt;
+-    height: 8pt;
+-    line-height: 8pt;
++.chronology-calendar-day.chronology-heat-level.chronology-heat-4 .chronology-calendar-heat-background {
++    background-color: #7fa37a !important;
+ }
+ 
+-.chrono-note-time {
+-    font-size: 60%;
+-    display: inline-block;
+-    vertical-align: bottom;
+-    /* margin-left: -6em; */
++.chronology-calendar-day.chronology-heat-level[data-scheme="nature"][data-nature-bucket="-1"] .chronology-calendar-heat-background {
++    background-color: transparent !important;
+ }
+ 
+-.chrono-badge.chrono-created {
+-    /* background-color: var(--interactive-accent); */
+-    background-color: var(--color-green);
++.chronology-calendar-day.chronology-heat-level[data-scheme="nature"][data-nature-bucket="0"] .chronology-calendar-heat-background {
++    background-color: #c62828 !important;
+ }
+ 
+-.chrono-badge.chrono-modified {
+-    /* background-color: var(--text-selection); */
+-    background-color: var(--color-orange);
++.chronology-calendar-day.chronology-heat-level[data-scheme="nature"][data-nature-bucket="1"] .chronology-calendar-heat-background {
++    background-color: #f8cdd3 !important;
+ }
+ 
+-.chrono-notes-count {
+-    margin-left: 2pt;
+-    margin-right: 2pt;
+-    /* color: var(--text-normal) */
+-    /* background-color: var(--interactive-accent);
+-    border-radius: 50%; */
++.chronology-calendar-day.chronology-heat-level[data-scheme="nature"][data-nature-bucket="2"] .chronology-calendar-heat-background {
++    background-color: #cfe8ff !important;
+ }
+ 
+-.chrono-notes-ellipsis {
+-    float: right;;
++.chronology-calendar-day.chronology-heat-level[data-scheme="nature"][data-nature-bucket="3"] .chronology-calendar-heat-background {
++    background-color: #1976d2 !important;
+ }
+ 
+-.chronology-calendar-chevron {
+-    color: var(--text-muted);
+-    cursor: var(--cursor);
+-    /* padding: 5px 8px 0 8px;
+-    margin: 0 3px 10px 3px; */
+-    border-radius: 4px;
++.theme-light .chronology-calendar-day span {
++    color: #000000;
+ }
+ 
++.theme-dark .chronology-calendar-day span {
++    color: #ffffff;
++}
+ 
+-.chronology-calendar-chevron:hover {
+-    color: var(--text-accent);
++.chronology-calendar-day.chronology-heat-level.chronology-heat-1 span,
++.chronology-calendar-day.chronology-heat-level.chronology-heat-2 span,
++.chronology-calendar-day.chronology-heat-level.chronology-heat-3 span {
++    color: #1f2a36 !important;
+ }
+ 
+-.chevron::before {
+-	border-style: solid;
+-	border-width: 0.25em 0.25em 0 0;
+-	content: '';
+-	display: inline-block;
+-	height: 0.45em;
+-	left: 0.15em;
+-	position: relative;
+-	top: 0.15em;
+-	transform: rotate(-45deg);
+-	/* vertical-align: top; */
+-	width: 0.45em;
++.chronology-calendar-day.chronology-heat-level.chronology-heat-4 span {
++    color: #ffffff !important;
+ }
+ 
+-.chevron.right:before {
+-	left: 0;
+-	transform: rotate(45deg);
++.chronology-calendar-day.chronology-heat-level[data-scheme="nature"][data-nature-bucket="0"] span,
++.chronology-calendar-day.chronology-heat-level[data-scheme="nature"][data-nature-bucket="3"] span {
++    color: #ffffff !important;
+ }
+ 
+-.chevron.bottom:before {
+-	top: 0;
+-	transform: rotate(135deg);
++.chronology-calendar-day.chronology-heat-level[data-scheme="nature"][data-nature-bucket="1"] span,
++.chronology-calendar-day.chronology-heat-level[data-scheme="nature"][data-nature-bucket="2"] span {
++    color: #1f2a36 !important;
+ }
+ 
+-.chevron.left:before {
+-	left: 0.25em;
+-	transform: rotate(-135deg);
++.theme-dark .chronology-calendar-day.chronology-heat-percent span {
++    color: #ffffff !important;
++}
++
++.theme-light .chronology-calendar-day.chronology-heat-percent span {
++    color: #000000 !important;
++}
++
++.chronology-calendar-day.chronology-heat-percent[data-heat-over="true"] span {
++    color: #1f2a36 !important;
++}
++
++.chronology-calendar-day.chronology-heat-level[data-scheme="redgreen"][data-nature-bucket="-1"] .chronology-calendar-heat-background {
++    background-color: transparent !important;
+ }
++
++.chronology-calendar-day.chronology-heat-level[data-scheme="redgreen"][data-nature-bucket="0"] .chronology-calendar-heat-background {
++    background-color: #c62828 !important;
++}
++
++.chronology-calendar-day.chronology-heat-level[data-scheme="redgreen"][data-nature-bucket="1"] .chronology-calendar-heat-background {
++    background-color: #ef9a9a !important;
++}
++
++.chronology-calendar-day.chronology-heat-level[data-scheme="redgreen"][data-nature-bucket="2"] .chronology-calendar-heat-background {
++    background-color: #a5d6a7 !important;
++}
++
++.chronology-calendar-day.chronology-heat-level[data-scheme="redgreen"][data-nature-bucket="3"] .chronology-calendar-heat-background {
++    background-color: #2e7d32 !important;
++}
++
++.chronology-calendar-day.chronology-heat-level[data-scheme="redgreen"][data-nature-bucket="0"] span,
++.chronology-calendar-day.chronology-heat-level[data-scheme="redgreen"][data-nature-bucket="3"] span {
++    color: #ffffff !important;
++}
++
++.chronology-calendar-day.chronology-heat-level[data-scheme="redgreen"][data-nature-bucket="1"] span,
++.chronology-calendar-day.chronology-heat-level[data-scheme="redgreen"][data-nature-bucket="2"] span {
++    color: #1f2a36 !important;
++}
++
++.chronology-calendar-day.chronology-selected:not([data-scheme="nature"])::before {
++    background-color: #3f6fb5 !important;
++    opacity: 1;
++}
++
++.chronology-calendar-day.chronology-selected[data-scheme="nature"]::before {
++    background-color: var(--interactive-accent-hover);
++    opacity: 1;
++}
++
++.chrono-note-indicator {
++  font-size: 14px;
++  margin-right: 6px;
++  opacity: 1;
++}
++
++.chrono-note-indicator[data-type="created"] {
++  color: #4caf50;
++}
++
++.chrono-note-indicator[data-type="modified"] {
++  color: #2196f3;
++}
++
++td.chronology-calendar-day.chronology-selected span,
++td.chronology-calendar-day.chronology-selected.chronology-heat-level span,
++td.chronology-calendar-day.chronology-selected.chronology-heat-percent span,
++td.chronology-calendar-day.chronology-selected[data-scheme="nature"] span,
++td.chronology-calendar-day.chronology-selected[data-scheme="redgreen"] span,
++td.chronology-calendar-day.chronology-selected[data-heat-over="true"] span,
++td.chronology-calendar-day.chronology-selected[data-scheme="nature"][data-nature-bucket="-1"] span,
++td.chronology-calendar-day.chronology-selected[data-scheme="nature"][data-nature-bucket="0"] span,
++td.chronology-calendar-day.chronology-selected[data-scheme="nature"][data-nature-bucket="1"] span,
++td.chronology-calendar-day.chronology-selected[data-scheme="nature"][data-nature-bucket="2"] span,
++td.chronology-calendar-day.chronology-selected[data-scheme="nature"][data-nature-bucket="3"] span,
++td.chronology-calendar-day.chronology-selected[data-scheme="redgreen"][data-nature-bucket="-1"] span,
++td.chronology-calendar-day.chronology-selected[data-scheme="redgreen"][data-nature-bucket="0"] span,
++td.chronology-calendar-day.chronology-selected[data-scheme="redgreen"][data-nature-bucket="1"] span,
++td.chronology-calendar-day.chronology-selected[data-scheme="redgreen"][data-nature-bucket="2"] span,
++td.chronology-calendar-day.chronology-selected[data-scheme="redgreen"][data-nature-bucket="3"] span {
++    color: #ffffff !important;
++}
+\ No newline at end of file

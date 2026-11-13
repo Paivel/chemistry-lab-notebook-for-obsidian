@@ -1,0 +1,9 @@
+{
+  "id": "template-guard",
+  "name": "Template Guard",
+  "version": "1.4.1",
+  "minAppVersion": "1.5.0",
+  "description": "Keeps the structure of journal notes: protects template headings, field labels, tables and buttons while editing, restores missing parts and adds new template fields to existing notes of a project.",
+  "author": "Pavel Sakharov",
+  "isDesktopOnly": false
+}

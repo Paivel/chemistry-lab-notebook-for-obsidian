@@ -1,0 +1,29 @@
+/* Reactio Draw (Obsidian wrapper) */
+
+/* the drawing tab: Reactio Draw's page fills it */
+.workspace-leaf-content .view-content.reactio-draw-view {
+  padding: 0;
+  overflow: hidden;
+}
+.reactio-draw-frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+/* a scheme picture in a note (click to edit) */
+.reactio-scheme-picture {
+  cursor: pointer;
+}
+.reactio-scheme-picture.reactio-scheme-fit {
+  max-width: 100%;
+}
+
+/* the IUPAC name window and the text prompts */
+.reactio-name-row .reactio-name {
+  font-weight: 600;
+}
+.reactio-wide-input {
+  width: 100%;
+}
