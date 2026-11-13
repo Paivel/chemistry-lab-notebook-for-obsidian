@@ -17,6 +17,12 @@
 
 For free file synchronization, you can use OneDrive or another cloud service.
 
+## How the Notebook Works
+
+Each reaction is one note. Files from your drawing program, the NMR service and your phone go into it, and the plugins made for this notebook (blue) turn what is in the notes into schemes, summary tables, search results and a draft of the Supporting Information. Everything stays in this folder on your computer.
+
+![[plugins-overview.png|560]]
+
 ## Obsidian Interface Overview
 
 Obsidian consists of three main sections:
@@ -96,7 +102,9 @@ To switch between Reading Mode and the current editing mode, press **Ctrl + E**.
 ## Tips and Tricks
 
 - Each **reaction** corresponds to a separate note with a unique ID and a code associated with a particular project. All reaction notes are stored in the **Journal** folder.
-- Examples of completed reaction notes can be found in the Journal folder: [[IM_1 Cl acenaphthene]] and [[IM_2 CF3 cyclohexene]].
+- Examples of completed reaction notes can be found in the Journal folder: [[IM_1 Cl acenaphthene]] and [[IM_2 CF3 cyclohexene]]. This is how [[IM_1 Cl acenaphthene]] looks: the scheme and reagent table under **Table**, the fields below it, and today's tasks and the calendar on the right.
+
+![[reaction-note.png]]
 - Use the QuickAdd hotkey (Exp_) or the QuickAdd button ![[Welcome-note-2.png]] in the left panel to create a new note (see [[#Getting Started]]). The new note is named right away by its code and number (**Exp_5**). You can add a short name after the code in the title heading (`# Exp_5 Suzuki`); the file name follows it automatically. If a note is ever left as **Exp_temp** (for example, when the renaming failed), editing its title fixes the name.
 - The template parts of a reaction note (headings, field labels such as `**yield**::`, the note number `**id1**:: 005` with its value, table borders and the first word of a table header such as `TLC`, buttons, the page break at the end of the note) are protected by **Template Guard** (it reads the rules from the project template, no setup is needed): they cannot be deleted or changed by typing, and nothing can be appended to a heading. Values, table cells and the procedure are edited as usual; in the title `# Exp_5 Suzuki` only the code is fixed. To change the structure of one note on purpose, click **🔒 Template** in the status bar (or assign a hotkey to *Template Guard: Lock / unlock the template in this note* in **Settings → Hotkeys**). If a note misses a template part when it is opened, Template Guard lists it and offers **Restore**. See [[Template Guard guide]].
 - To add a field to all notes of a project, add it to the project template (`Templates/Exp_.md`) and save: Template Guard offers to add it to the existing notes, including the finished ones. A field deleted from the template is no longer protected or restored; old notes keep it.
@@ -278,6 +286,10 @@ To use it:
 7. Review or edit the compound-description template in the window that opens, then click **Generate**. The DOCX file is saved in the selected output folder and opened in your system's default application.
 
    ![[Welcome-note-11.png]]
+
+   The paragraph for [[IM_1 Cl acenaphthene]] in the draft. The procedure sentence and the numbers of the starting materials (1.X, 2.Y) come from the template: check them against the recorded reaction and complete them.
+
+   ![[si-report.png|520]]
 
 If you have several compound series, you can create a separate Dataview table for each series, generate the reports using different description templates, and combine the resulting Word documents manually.
 
