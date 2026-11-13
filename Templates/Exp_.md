@@ -23,7 +23,7 @@ tags:
 **roles**::
 **needed**::NMR, mass, yield
 
-![[Exp_<% id1 %>.cdx]]
+![[Exp_<% id1 %>.cdxml]]
 
 ## Procedure Exp_<% id1 %> 
 
