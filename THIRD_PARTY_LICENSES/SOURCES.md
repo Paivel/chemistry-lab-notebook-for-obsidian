@@ -11,7 +11,7 @@ The version column records the version included in this vault. Repository links 
 | chronology-custom | 1.1.14-pavel.1 | MIT | https://github.com/Canna71/obsidian-chronology/releases/tag/1.1.14 | Copyright (c) 2022 Gabriele Cannata. Modified by Pavel Sakharov; see the plugin's `CHANGES.md`, `LICENSE`, and `plugin-notices/chronology-custom/main.js.diff`. Upstream source: `obsidian-chronology-1.1.14.zip` |
 | clear-unused-images-plus | 1.11.0 | MIT | https://github.com/Puhhh/clear-unused-images-obsidian | Copyright (c) 2026 Aleksei Blinov; maintained fork of the original plugin by Ozan Tellioglu |
 | cmdr (Commander) | 0.5.12 | MIT | https://github.com/phibr0/obsidian-commander | Copyright (c) 2022 Phillip Bronzel; Commander contributors |
-| completed-task-display | 1.0.12 | MIT | https://github.com/heliostatic/completed-task-display | Copyright (c) 2025 Ben Lee-Cohen |
+| completed-task-display | 1.0.13 | MIT | https://github.com/heliostatic/completed-task-display | Copyright (c) 2025 Ben Lee-Cohen |
 | dataview | 0.5.68 | MIT | https://github.com/blacksmithgu/obsidian-dataview | Copyright (c) 2021 Michael Brenan |
 | dataview-serializer | 3.1.4 | MIT | https://github.com/dsebastien/obsidian-dataview-serializer | Copyright (c) Sebastien Dubois |
 | obsidian-filename-heading-sync | 1.11.1 | MIT | https://github.com/dvcrn/obsidian-filename-heading-sync | Copyright (c) 2021 David Mohl. The upstream LICENSE file (MIT) was added by the author in October 2026, after the README had declared MIT since 2021; see `licenses/obsidian-filename-heading-sync/LICENSE` |
