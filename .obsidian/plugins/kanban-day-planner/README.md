@@ -1,6 +1,6 @@
 # Kanban Day Planner
 
-Turns one board of the [Kanban](https://github.com/obsidian-community/obsidian-kanban) plugin into a day planner. Formerly *Kanban Planner Custom*, written for the *Chemistry Lab Notebook for Obsidian* vault; it works with any board of the Kanban plugin.
+Turns one board of the [Kanban](https://github.com/community-archive/obsidian-kanban) plugin into a day planner. Formerly *Kanban Planner Custom*, written for the *Chemistry Lab Notebook for Obsidian* vault; it works with any board of the Kanban plugin.
 
 - **Weekly rebuild.** Once per weekly cycle — the first time the board note (the *trigger file*) is opened on or after the *Update weekday* (default Saturday), or at once with *Run Kanban maintenance now* — the plugin rebuilds the lists between **Unsorted** and **done**: a list for today and for each of the next days (*Days ahead*, default 14), titled like `Monday 2026-11-02`. The lists of past days are removed: their finished tasks go to **done**, the unfinished ones to **Unsorted** with a tag — the first time the first rollback tag (default `#yellow`), after that the repeated one (`#red`) — and Unsorted is sorted with the tasks moved most often first. Finished tasks of the other day lists go to done as well.
 - **Tags.** Changing a rollback tag in the settings gives the new tag its colour (yellow, red) in the board's Kanban settings.
