@@ -21,6 +21,10 @@ A chemistry electronic laboratory notebook (ELN) based on Obsidian and distribut
 
 The project combines configured open-source community plugins, purpose-built plugins developed for this workflow, reusable templates, and helper scripts that simplify routine laboratory-journal work. It can be adopted as a complete ELN or used modularly: laboratories may reuse individual plugins, templates, scripts, or parts of the workflow in an existing Obsidian vault. The workflow connects reaction records, analytical data, planning, chemical-structure searching, reagent databases, and external chemistry software while keeping the research files under the user's control.
 
+<img src="docs/images/plugins-overview.png" alt="Inputs, plugins and outputs of the notebook" width="640">
+
+*Inputs and outputs of six plugins of the vault; plugins written for this notebook are highlighted.*
+
 ## Screenshots
 
 **Reaction note.** A reaction note in Obsidian with tags, the reaction scheme and reagent table, and inline fields used by Dataview tables. The vault structure is on the left; the daily Kanban tasks and the note-activity calendar are on the right.
@@ -31,7 +35,7 @@ The project combines configured open-source community plugins, purpose-built plu
 
 <img src="docs/images/structure-search.png" alt="Reaction substructure search results" width="720">
 
-**Supporting Information draft.** Chemistry Word Report assembles compound names, structures, yields, and analytical data from the selected notes into an editable Word document.
+**Supporting Information draft.** Chemistry Word Report assembles compound names, structures, yields, and analytical data from the selected notes into an editable Word document. The procedure sentence and the starting-material numbers (1.X, 2.Y) are template text, which the chemist checks and completes.
 
 <img src="docs/images/si-report.png" alt="Generated Supporting Information draft" width="720">
 
