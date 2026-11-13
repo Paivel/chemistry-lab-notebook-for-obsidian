@@ -114,7 +114,7 @@ To switch between Reading Mode and the current editing mode, press **Ctrl + E**.
 
   ![[Welcome note-22.png|394]]
 
-- **Links to the reaction file and the MestReNova file** are created automatically when you create a note from a template. Save the files in the **Files** folder in OneDrive using the correct names (for example, IM_1.cdx from ChemDraw, IM_1.mnova, and IM_1.pdf), and the links will become active; a reaction drawn with Reactio Draw is saved as IM_1.cdxml and the link is changed to it automatically. The reaction files of the example notes were drawn in Reactio Draw; their MestReNova and PDF spectrum files are not included, so those links stay empty. These programs and formats are optional: you can manually attach or link spectra and structure files produced by other software, or adapt the templates to use your preferred file extensions.
+- **Links to the reaction file and the MestReNova file** are created automatically when you create a note from a template. The reaction file is linked as IM_1.cdxml: a reaction drawn with Reactio Draw is saved under this name, and ChemDraw saves CDXML too (*Save As* → CDXML). If you keep a ChemDraw .cdx file instead, the scheme still appears (CDX Scheme Image finds the file by its name); only the link stays empty until you change it to IM_1.cdx. Save the files in the **Files** folder in OneDrive using the correct names (for example, IM_1.cdxml, IM_1.mnova, and IM_1.pdf), and the links will become active. The reaction files of the example notes were drawn in Reactio Draw; their MestReNova and PDF spectrum files are not included, so those links stay empty. These programs and formats are optional: you can manually attach or link spectra and structure files produced by other software, or adapt the templates to use your preferred file extensions.
 - You can add the **Files** folder to Quick Access in File Explorer for faster access when saving files.
 
   ![[Welcome note-6.png|255]]
@@ -123,7 +123,7 @@ To switch between Reading Mode and the current editing mode, press **Ctrl + E**.
 
   ![[Welcome note-11.png|263]]
 
-- To open your CDX editor (**ChemDraw**, or the **Reactio Draw** app if `.cdx` files open in it) quickly, use the link *Open CDX Editor* at the bottom of the note. You can save the resulting file as IM_1.cdx (or IM_1.cdxml) later. **ACD/ChemSketch can be used instead of ChemDraw**; link its structure file manually or change the template to use the ChemSketch file extension.
+- To open your CDX editor (**ChemDraw**, or the **Reactio Draw** app if `.cdx` files open in it) quickly, use the link *Open CDX Editor* at the bottom of the note. You can save the resulting file as IM_1.cdxml (or IM_1.cdx) later. **ACD/ChemSketch can be used instead of ChemDraw**; link its structure file manually or change the template to use the ChemSketch file extension.
 
   ![[Welcome note-14.png|403]]
 

@@ -23,7 +23,7 @@ tags:
 **roles**::
 **needed**::NMR, mass, yield
 
-![[IM_<% id %>.cdx]]
+![[IM_<% id %>.cdxml]]
 
 ## Procedure IM_<% id %> 
 
