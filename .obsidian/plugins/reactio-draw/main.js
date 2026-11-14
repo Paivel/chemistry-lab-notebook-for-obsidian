@@ -162,6 +162,11 @@ const SCHEME_EXT = 'rdraw';
 const DOC_EXT = 'reactio'; // Reactio Draw's own document (JSON), as the apps save it
 const OPEN_EXT = [SCHEME_EXT, DOC_EXT, 'cdxml', 'mol', 'rxn', 'sdf', 'smi'];
 
+/** True while a frame still shows its empty start page (Obsidian's origin, so readable); the Reactio page is not readable */
+function isEmptyFrame(frame) {
+  try { const d = frame.contentDocument; return Boolean(d) && d.URL === 'about:blank'; } catch (e) { return false; }
+}
+
 /** The letter of a shortcut key as Reactio Draw 1.7.1 reads it: the Latin letter printed on the key (AZERTY, QWERTZ),
  *  and for keyboards whose letters are not Latin (Russian, Greek…) the key's place on a US keyboard (KeyS -> 's'). */
 function shortcutLetter(input) {
@@ -495,8 +500,21 @@ class ReactioView extends ItemView {
   async onOpen() {
     const el = this.contentEl; el.empty(); el.addClass('reactio-draw-view'); // layout in styles.css
     try { await this.plugin.preparePage(); } catch (e) { el.createEl('p', { text: 'Reactio Draw could not be started: its page is missing from the plugin folder.' }); return; }
-    this.frame = el.createEl('iframe', { cls: 'reactio-draw-frame', attr: { src: this.plugin.pageUrl(), allow: 'clipboard-read; clipboard-write' } });
-    const loaded = new Promise((r) => { this.frame.addEventListener('load', () => r(), { once: true }); setTimeout(r, 30000); });
+    // The frame starts empty (about:blank, which takes Obsidian's origin) and is pointed at the page once it is in the
+    // window: Obsidian refuses a frame created straight on the page's app:// address in installers with Electron 28
+    // (installers 1.5.12 and 1.6.3 among those tested), but lets an empty frame of its own go there.
+    const frame = el.createEl('iframe', { cls: 'reactio-draw-frame', attr: { allow: 'clipboard-read; clipboard-write' } });
+    this.frame = frame;
+    // the page's own load event, not the empty start page's: commands wait for it (see ReactioBridge.whenReady)
+    const loaded = new Promise((r) => {
+      const onLoad = () => { if (isEmptyFrame(frame)) return; frame.removeEventListener('load', onLoad); r(); };
+      frame.addEventListener('load', onLoad); setTimeout(r, 30000);
+    });
+    const start = () => {
+      if (this.frame !== frame) return;
+      if (frame.isConnected) frame.src = this.plugin.pageUrl(); else this.startTimer = setTimeout(start, 100);
+    };
+    start();
     this.bridge = new ReactioBridge(window, () => this.frame && this.frame.contentWindow, {
       loaded,
       onEvent: (ev) => { if (ev === 'change' && !this.loading) { this.setDirty(true); this.snapshotSoon(); } },
@@ -527,7 +545,7 @@ class ReactioView extends ItemView {
 
   /** Closing the tab (Ctrl/Cmd+W, ×) saves a drawing opened from a note without asking */
   async onClose() {
-    clearTimeout(this.snapTimer);
+    clearTimeout(this.snapTimer); clearTimeout(this.startTimer);
     try {
       if (this.dirty && this.autosave && this.path) {
         let snap = null;
