@@ -131,7 +131,7 @@ The Excel printing automation in `Templates/add_mass.md` is Windows-only because
 
 ChemDraw, MestReNova and TopSpin are optional external applications, not requirements. Spectra may be stored and linked in any suitable format produced by other processing software, including PDFs, images, exchange formats, or original data files.
 
-ACD/ChemSketch can be used instead of ChemDraw. Its structure files can be linked to the experiment, and its reagent-calculation table can be captured and inserted into the reaction note in the same way as a ChemDraw table. Automatic example links use `.cdx` and `.mnova` filenames, but users can add links to any other file type or adapt the templates to their preferred software.
+Reactio Draw, which is free, open source and included in the vault, can be used instead of ChemDraw. It saves reactions as CDXML, so the reaction scheme and the reagent table appear in the reaction note automatically and the reactions are found by the structure search, as with ChemDraw files. Automatic example links use `.cdxml` and `.mnova` filenames, but users can add links to any other file type or adapt the templates to their preferred software.
 
 ## Telegram configuration
 
