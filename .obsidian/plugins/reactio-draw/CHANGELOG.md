@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.10.2 — 2026-11-14
+- **Fix: the Reactio Draw tab stayed empty with Obsidian installers that use Electron 28** (installers 1.5.12 and 1.6.3 among those tested, whatever the app version; the page's request ended in `ERR_BLOCKED_BY_CLIENT`). Obsidian refuses a frame created straight on an `app://` file address there, but lets an empty frame of its own go to it. The frame now starts empty and is pointed at the page once it is in the window; commands wait for the page's own load event, not the empty page's.
+- Checked in real Obsidian on Linux: installer 1.5.12 (Electron 28) with app 1.5.12 and with app 1.15.1, installers 1.6.3, 1.6.7 and 1.8.10 (Electron 28, 30, 34) with app 1.15.1, and Obsidian 1.15.1 (Electron 43): the tab opens, a drawing keeps its stereo in SMILES, and `IM_1.cdxml` opens with its stereo. Before the fix the tab stayed empty with the two Electron 28 installers.
+
 ## 0.10.1 — 2026-11-13
 - **Fix: the Reactio Draw tab did not open in Obsidian 1.15** (*View failed to load … reading 'path'*). The view had a method `load(file)`; Obsidian 1.15 calls a view's own `load()` (from Obsidian's Component) without arguments when it opens it. The method is now `loadFile(file)`. The load test now builds the view on native Obsidian classes and calls `load()` as Obsidian 1.15 does.
 - **Fix: stereo kept in SMILES and InChI of a drawing opened from a note.** Reactio Draw reports *ready* before the end of its page has been read, where OpenChemLib sits; a drawing set at once then lost its stereo for the session (*Stereo (wedges, @, E/Z) is left out of the SMILES and InChI*). Commands now also wait for the page's load event.
