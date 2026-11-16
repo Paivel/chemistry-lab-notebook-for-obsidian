@@ -4,6 +4,7 @@
 - **Labelled atoms (isotopes).** An atom with a mass number (Isotope in the file: ¹⁵N, ¹³C) is drawn with the number as a superscript before the element, as ChemDraw and Reactio Draw show it. Reactio Draw writes the label without the number (`N`) and a labelled carbon without any label: the plugin adds the number, and for such a carbon the label with its hydrogens (H₃¹³C, ¹³CH₂…), written on the side away from the bonds. A ChemDraw label that already holds the number (`13CH3`) keeps it, raised; D and T stay as they are.
 - In formulas the mass number in brackets is raised, not lowered: `C16H11N2[15N]` → C₁₆H₁₁N₂[¹⁵N] in the reagent table (ChemDraw and Reactio Draw tables) and `Na[15N]O2` typed next to the arrow → Na[¹⁵N]O₂. Other numbers in brackets in plain text (`[15]`) stay as written.
 - **Mass picture of a labelled product.** `Mass_pic::` was not made for a formula such as `C16H11N2[15N]` (the formula was not understood). Now every bracketed atom counts as that isotope: Exact Mass 246.0923 for C₁₆H₁₁N₂[¹⁵N]; radiolabels (³H, ¹¹C, ¹⁴C, ¹⁸F, ³²P, ³⁵S, ¹²⁵I, ¹³¹I and others) from AME2020 masses.
+- **`mass::` of 1 g or more in grams.** The product mass goes into the note as the reagent table shows it: below 1 g in mg with one decimal (`716.0 mg`), from 1 g on in g with two decimals (`2.06 g`; before: `2057.0 mg`). A mass the plugin wrote before is replaced the next time the reaction file is saved.
 - Pictures of files without labelled atoms are unchanged (snapshot tests byte-identical).
 
 ## 1.8.12 — 2026-11-03

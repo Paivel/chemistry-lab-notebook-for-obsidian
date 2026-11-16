@@ -1504,11 +1504,13 @@ function formatYield(percent) {
   return Number(two) > 0 ? `${two}%` : `${Number(percent.toPrecision(1))}%`;
 }
 
-/** Product mass for the note in mg: one decimal ("71.00mg" -> "71.0 mg"), below 0.1 mg two decimals or one
- * significant digit ("0.03 mg"), so a small mass never reads as 0.0 */
+/** Product mass for the note: below 1 g in mg with one decimal ("71.00mg" -> "71.0 mg"; below 0.1 mg two decimals or
+ * one significant digit, "0.03 mg", so a small mass never reads as 0.0); from 1 g on in g with two decimals, as the
+ * reagent table shows it ("2.057 g" -> "2.06 g") */
 function formatMass(grams) {
   const mg = grams * 1000;
   if (!(mg > 0)) return '0.0 mg';
+  if (Math.round(mg * 10) / 10 >= 1000) return `${(Math.round(grams * 100 + 1e-9 * Math.max(1, grams * 100)) / 100).toFixed(2)} g`;
   if (mg >= 0.095) return `${(Math.round(mg * 10) / 10).toFixed(1)} mg`;
   const two = (Math.round(mg * 100) / 100).toFixed(2);
   return Number(two) > 0 ? `${two} mg` : `${Number(mg.toPrecision(1))} mg`;
@@ -1522,7 +1524,8 @@ function formatMass(grams) {
  * Reactio Draw file the record says so); 0 % or an empty yield with no mass clears the field. A yield of 0 % (below
  * 0.0001 %) or an empty yield next to a weighed mass above 0 is a contradiction (often a wrong MW or scale in the
  * table): yield '' with conflict { key: 'yield', reason, mass } — the field is cleared under the provenance rule and the
- * plugin always tells the user. mass: the measured product mass in mg with one decimal.
+ * plugin always tells the user. mass: the measured product mass, below 1 g in mg with one decimal, from 1 g on in g with
+ * two decimals (see formatMass).
  * mw: as ChemDraw shows it.
  */
 function productValues(buf, productId) {
