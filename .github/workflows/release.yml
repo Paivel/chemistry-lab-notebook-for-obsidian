@@ -25,7 +25,7 @@ jobs:
           set -e
           tag="$GITHUB_REF_NAME"
           git archive --format=zip --prefix="Chemistry Lab Notebook ${tag}/" -o "Chemistry-Lab-Notebook-${tag}.zip" HEAD
-          own="cdx-scheme-image reaction-structure-search chemistry-word-report reactio-draw telegram-tlc-image nmr-downloader template-guard kanban-day-planner chronology-custom"
+          own="cdx-scheme-image reaction-structure-search chemistry-word-report reactio-draw telegram-tlc-image nmr-downloader template-guard kanban-day-planner open-files-directly chronology-custom"
           mkdir -p "upd/Plugins-update-${tag}/plugins"
           for id in $own; do git archive HEAD ".obsidian/plugins/${id}" | tar -x -C upd; done
           mv upd/.obsidian/plugins/* "upd/Plugins-update-${tag}/plugins/"

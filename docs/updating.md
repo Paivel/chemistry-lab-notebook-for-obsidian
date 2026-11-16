@@ -5,7 +5,7 @@ An update replaces program files only. Your notes, files and plugin settings sta
 ## Plugins
 
 - **Plugins from Obsidian's community directory** (Dataview, Templater, Kanban and the others): *Settings → Community plugins → Check for updates*.
-- **The notebook's own plugins** (CDX Scheme Image, Reaction Structure Search, Chemistry Word Report, Reactio Draw, TLC Photo Inbox, NMR Downloader, Template Guard, Kanban Day Planner) and **Chronology Custom**: when a plugin is listed in the community directory, the same button updates it. Until then, use the archive `Plugins-update-vX.Y.Z.zip` of the release:
+- **The notebook's own plugins** (CDX Scheme Image, Reaction Structure Search, Chemistry Word Report, Reactio Draw, TLC Photo Inbox, NMR Downloader, Template Guard, Kanban Day Planner, Open Files Directly) and **Chronology Custom**: when a plugin is listed in the community directory, the same button updates it. Until then, use the archive `Plugins-update-vX.Y.Z.zip` of the release:
   1. Close Obsidian.
   2. Unpack the archive. Its folder `plugins` holds one folder per plugin, without `data.json` (the plugin's settings).
   3. Copy these folders into `.obsidian/plugins/` of your vault so that the folders are merged and the files in them replaced. The folder `.obsidian` is hidden: in the macOS Finder press Cmd+Shift+. to show it; in Windows Explorer turn on *View → Show → Hidden items*.

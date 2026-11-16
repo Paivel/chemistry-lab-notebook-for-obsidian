@@ -1,0 +1,9 @@
+{
+  "id": "open-files-directly",
+  "name": "Open Files Directly",
+  "version": "0.1.0",
+  "minAppVersion": "1.5.0",
+  "description": "Opens links to the file types you list, such as .cdxml, .cdx and .mnova, in their own program with one click, without the question whether to open the file in another app.",
+  "author": "Pavel Sakharov",
+  "isDesktopOnly": true
+}

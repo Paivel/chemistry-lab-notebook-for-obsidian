@@ -58,6 +58,7 @@ The following plugins are authored by Pavel Sakharov and are distributed under t
 - `cdx-scheme-image`
 - `nmr-downloader`
 - `template-guard`
+- `open-files-directly` (off in the downloaded vault; turned on by the user)
 - `reactio-draw` (the wrapper, `LICENSE` in its folder; Reactio Draw inside it is MPL-2.0, see above)
 
 ## Verification against upstream releases

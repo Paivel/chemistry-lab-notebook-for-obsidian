@@ -5,8 +5,9 @@
 3. Rename the folder as desired (for example, **Lab Notebook Obsidian**).
 4. Open Obsidian and select the folder as your vault.
 5. Trust the author and enable the required plugins.
-6. Close the Settings window.
-7. Read this welcome note. A description of every script, CSS snippet, and plugin in the vault is given in [[Vault Components]].
+6. In the list of community plugins, turn on **Open Files Directly** (it is off in the downloaded vault). Then links to reaction and spectrum files in the **Files** folder (`.cdxml`, `.cdx`, `.mnova`) open in their program with one click; without it, Obsidian first asks *Open file in another app?*.
+7. Close the Settings window.
+8. Read this welcome note. A description of every script, CSS snippet, and plugin in the vault is given in [[Vault Components]].
 
 > [!danger] IMPORTANT
 > Obsidian is free for personal, commercial, educational, and nonprofit use, but it is not open source. All your files remain on your computer and are available offline at any time unless you choose to use a synchronization service.
@@ -194,10 +195,10 @@ To switch between Reading Mode and the current editing mode, press **Ctrl + E**.
 - The **Stat** folder contains **Dataview tables**. You can use the Dataview plugin to create tables that update automatically. Notes can be filtered by tags or folder. For example, you can generate an [[Optimization]] table or a [[Scope]] list by using the appropriate tags. You can also list notes created during the previous seven days or generate a list of samples requiring mass-spectrometry measurements, such as [[Mass needed]]. Dataview is highly flexible and can be used in many different ways. For instructions, see the [Dataview documentation](https://blacksmithgu.github.io/obsidian-dataview/) or examine the example notes in Source Mode.
 - The Chronology plugin provides statistics about when notes are created and edited. Open it in the right panel and select the target daily notes in the settings. The days will be displayed in different colors, allowing you to track your daily activity easily.
 
-> [!warning] Modified Kanban and Chronology plugins
-> This vault includes modified builds of **Kanban** and **Chronology**. They do not receive normal updates from the Obsidian Community Plugins store. Installing or updating the store versions may overwrite the modified builds and remove project-specific changes.
+> [!warning] Modified Chronology plugin
+> This vault includes a modified build of **Chronology** (Chronology Custom). It does not receive normal updates from the Obsidian Community Plugins store. Installing or updating the store version may overwrite the modified build and remove project-specific changes.
 >
-> The original **Kanban** plugin can be used instead with little loss of functionality. Replacing the modified **Chronology** plugin with the original version will preserve only part of the functionality used by this workflow, and its appearance will differ.
+> Replacing it with the original **Chronology** plugin preserves only part of the functionality used by this workflow, and its appearance will differ. **Kanban** is the unmodified plugin from the store and updates normally.
 
 ![[Welcome note-63.png]]
 ![[Welcome note-64.png|243]]
