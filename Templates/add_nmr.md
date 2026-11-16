@@ -50,6 +50,7 @@ while (true) {
 
   const choices = [
     ...remainingSpectra,
+    OTHER,
     "Done"
   ];
 
@@ -63,6 +64,14 @@ while (true) {
   );
 
   if (!selected || selected === "Done") break;
+
+  // "Other…" asks for an experiment that is not in the list (TOCSY, ROESY, 11B, 29Si…); it can be chosen again
+  if (selected === OTHER) {
+    let other = await tp.system.prompt("Enter NMR experiment (e.g. TOCSY, ROESY, 11B, 29Si)");
+    other = (other ?? "").replace(/\s+/g, " ").trim();
+    if (other && !selectedSpectra.includes(other)) selectedSpectra.push(other);
+    continue;
+  }
 
   selectedSpectra.push(selected);
 }
@@ -160,7 +169,11 @@ const spectraCell = [
   ...defaultSpectra.map(s => `[${selectedSpectra.includes(s) ? "x" : " "}] ${s}<br>`),
   ...extraSpectra
     .filter(s => selectedSpectra.includes(s))
-    .map(s => `[x] ${s}<br>`)
+    .map(s => `[x] ${s}<br>`),
+  // experiments typed after "Other…", in the order they were entered
+  ...selectedSpectra
+    .filter(s => !defaultSpectra.includes(s) && !extraSpectra.includes(s))
+    .map(s => `[x] ${cell(s).replace(/[<>]/g, "")}<br>`)
 ].join("");
 
 
