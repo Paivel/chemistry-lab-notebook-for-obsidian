@@ -658,7 +658,13 @@ function renderRdGrid(ctx, g, out, bounds, rd, conditions) {
   const text = (x, y, s, { bold, italic, anchor = 'start', fill = '#000', formula } = {}) => {
     let body;
     if (formula) {
-      body = String(s).split(/(\d+)/).map((p, i) => (i % 2 ? `<tspan font-size="${f2(fs * 0.7)}" baseline-shift="${f2(-fs * 0.25)}">${p}</tspan>` : esc(p))).join('');
+      // digits are subscripts, except the mass number of a labelled atom in brackets ([15N], [13C]): a superscript
+      const parts = String(s).split(/(\d+)/);
+      body = parts.map((p, i) => {
+        if (!(i % 2)) return esc(p);
+        const isotope = /\[$/.test(parts[i - 1]) && /^[A-Z][a-z]?\]/.test(parts[i + 1] || '');
+        return `<tspan font-size="${f2(fs * 0.7)}" baseline-shift="${f2(isotope ? fs * 0.35 : -fs * 0.25)}">${p}</tspan>`;
+      }).join('');
     } else {
       // Unicode subscript / superscript characters (N₂, from the conditions caption) drawn as shifted digits
       body = String(s).split(/([₀-₉₊₋]+|[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]+)/).map((p) => {
@@ -741,7 +747,7 @@ const OBJ = {
 };
 const P = {
   Position: 0x200, BBox: 0x204, Head: 0x207, Tail: 0x208, Visible: 0x11,
-  NodeType: 0x400, Element: 0x402, Charge: 0x421,
+  NodeType: 0x400, Element: 0x402, Charge: 0x421, Isotope: 0x420, NumHydrogens: 0x42b,
   Order: 0x600, Display: 0x601, DoublePos: 0x603, Begin: 0x604, End: 0x605,
   Text: 0x700, Justification: 0x701, LabelJustification: 0x823, LabelAlignment: 0x705,
   ColorTable: 0x300, FontTable: 0x100, Foreground: 0x301, Background: 0x302, Highlight: 0x308, BasisObjects: 0xb82,
@@ -792,21 +798,36 @@ function pieces(str) {
     if (!seg) continue;
     const formula = (r.face & 0x60) === 0x60;
     if (formula) {
-      // digits that follow a letter or closing bracket are subscripts;
-      // a trailing +/- (optionally with digits) is a superscript charge
-      const re = /([A-Za-z)\]])(\d+)|([+\-−]\d*|\d+[+\-−])$/g;
+      // the mass number of a labelled atom in brackets ([15N], [13C]) is a superscript; other digits that follow a
+      // letter or closing bracket are subscripts; a trailing +/- (optionally with digits) is a superscript charge
+      const re = /\[(\d+)(?=[A-Z][a-z]?\])|([A-Za-z)\]])(\d+)|([+\-−]\d*|\d+[+\-−])$/g;
       let last = 0; let m;
       while ((m = re.exec(seg))) {
         if (m[1] !== undefined) {
           const cut = m.index + 1;
           if (cut > last) out.push({ t: seg.slice(last, cut), r });
-          out.push({ t: m[2], r, sub: true });
+          out.push({ t: m[1], r, sup: true });
+          last = m.index + m[0].length;
+        } else if (m[2] !== undefined) {
+          const cut = m.index + 1;
+          if (cut > last) out.push({ t: seg.slice(last, cut), r });
+          out.push({ t: m[3], r, sub: true });
           last = m.index + m[0].length;
         } else {
           if (m.index > last) out.push({ t: seg.slice(last, m.index), r });
-          out.push({ t: m[3], r, sup: true });
+          out.push({ t: m[4], r, sup: true });
           last = m.index + m[0].length;
         }
+      }
+      if (last < seg.length) out.push({ t: seg.slice(last), r });
+    } else if ((r.face & 0x60) === 0 && /\[\d{1,3}[A-Z][a-z]?\]/.test(seg)) {
+      // plain text with a labelled atom (Na[15N]O2 typed next to the arrow): the mass number as a superscript
+      let last = 0;
+      for (const m of seg.matchAll(/\[(\d{1,3})(?=[A-Z][a-z]?\])/g)) {
+        const cut = m.index + 1;
+        out.push({ t: seg.slice(last, cut), r });
+        out.push({ t: m[1], r, sup: true });
+        last = cut + m[1].length;
       }
       if (last < seg.length) out.push({ t: seg.slice(last), r });
     } else {
@@ -878,7 +899,7 @@ function sliceString(str, a, b) {
     .map((r) => ({ ...r, start: Math.max(0, r.start - a) }));
   return { text: str.text.slice(a, b), runs };
 }
-function stackedLabel(s, label, pos) {
+function stackedLabel(s, label, pos, isotope = 0) {
   const align = X.int(label.props[P.LabelAlignment]); const lj = X.int(label.props[P.LabelJustification]);
   const where = align === 4 || lj === 3 ? -1 : align === 5 || lj === 4 ? 1 : 0;
   if (!where) return null;
@@ -894,20 +915,92 @@ function stackedLabel(s, label, pos) {
   const other = base + where * 0.835 * size;
   const svg = [textSVG(s, sliceString(str, 0, k), tp.x, base, anchor), textSVG(s, sliceString(str, k, str.text.length), tp.x, other, anchor)];
   const half = 0.36 * size * k;
-  return { svg, box: { cx: pos.x, cy: base - 0.36 * size, ax: half + s.marginWidth, ay: 0.36 * size + s.marginWidth } };
+  const box = { cx: pos.x, cy: base - 0.36 * size, ax: half + s.marginWidth, ay: 0.36 * size + s.marginWidth };
+  // a labelled atom (Reactio Draw writes 15NH without the number): the mass number left of the atom's letter
+  const named = /^[DT]$/.test(m[0]);
+  if (isotope > 0 && !named) {
+    const run = { ...((str.runs && str.runs[0]) || { size, color: 0 }), start: 0, face: 0x40 };
+    svg.push(textSVG(s, { text: String(isotope), runs: [run] }, right ? tp.x - 0.72 * size * k : tp.x, base, 'end'));
+  }
+  return { svg, box };
+}
+
+// ------------------------------------------------------------- isotopes ---
+// A labelled atom (Isotope on the atom: 15N, 13C) is drawn with its mass number as a superscript before the element, as
+// ChemDraw and Reactio Draw show it. ChemDraw writes the number into the label ("15N", "13CH3"); Reactio Draw writes the
+// label without it ("N") and a labelled carbon without any label, so the plugin adds the number, and for a carbon the
+// label with its hydrogens (¹³CH₃, H₃¹³C). D and T labels of hydrogen already say which isotope they are.
+const SYMBOLS = ['', 'H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 'Na', 'Mg', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar', 'K', 'Ca',
+  'Sc', 'Ti', 'V', 'Cr', 'Mn', 'Fe', 'Co', 'Ni', 'Cu', 'Zn', 'Ga', 'Ge', 'As', 'Se', 'Br', 'Kr', 'Rb', 'Sr', 'Y', 'Zr', 'Nb', 'Mo',
+  'Tc', 'Ru', 'Rh', 'Pd', 'Ag', 'Cd', 'In', 'Sn', 'Sb', 'Te', 'I', 'Xe'];
+const SUP_DIGIT_EM = 0.556 * 0.75;            // width of a superscript digit (Arial), in em of the label size
+/** The label string with the run of `[a, b)` turned into a superscript (other runs kept) */
+function superscriptRange(str, a, b) {
+  const runs = str.runs && str.runs.length ? str.runs : [{ start: 0, face: 0, size: ACS.fontSize, color: 0 }];
+  const at = (i) => { let r = runs[0]; for (const q of runs) if (q.start <= i) r = q; return r; };
+  const out = [];
+  for (const r of runs) if (r.start < a) out.push({ ...r });
+  const ra = at(a); out.push({ ...ra, start: a, face: (ra.face & ~0x60) | 0x40 });
+  const rb = at(b); if (b < str.text.length) out.push({ ...rb, start: b });
+  for (const r of runs) if (r.start > b) out.push({ ...r });
+  return { text: str.text, runs: out };
+}
+/** The label string with `digits` inserted as a superscript at index i */
+function insertSuperscript(str, i, digits) {
+  const text = str.text.slice(0, i) + digits + str.text.slice(i);
+  const runs = (str.runs && str.runs.length ? str.runs : [{ start: 0, face: 0, size: ACS.fontSize, color: 0 }])
+    .map((r) => ({ ...r, start: r.start >= i && r.start > 0 ? r.start + digits.length : r.start }));
+  return superscriptRange({ text, runs }, i, i + digits.length);
+}
+/** Single, double, triple, aromatic (1.5) bond orders of the bonds at each atom: Map(atom id -> [{ other, order }]) */
+function bondsByAtom(frag) {
+  const by = new Map(); const add = (id, other, order) => { if (!by.has(id)) by.set(id, []); by.get(id).push({ other, order }); };
+  for (const b of frag.children) {
+    if (b.type !== OBJ.Bond) continue;
+    const o = X.int(b.props[P.Order]); const order = o == null || o === 1 ? 1 : o === 2 ? 2 : o === 4 ? 3 : o === 0x100 ? 1.5 : o === 0x80 ? 1.5 : 0;
+    const a = X.uint(b.props[P.Begin]); const e = X.uint(b.props[P.End]);
+    add(a, e, order); add(e, a, order);
+  }
+  return by;
 }
 
 // ------------------------------------------------------------ structure ---
 function renderFragment(s, frag, out, bounds) {
   const nodes = new Map();
+  const bondsAt = bondsByAtom(frag);
+  const posOf = new Map(frag.children.filter((c) => c.type === OBJ.Node).map((c) => [c.id, X.point(c.props[P.Position])]));
   for (const c of frag.children) {
     if (c.type !== OBJ.Node) continue;
     const pos = X.point(c.props[P.Position]);
     if (!pos) continue;
     const label = c.children.find((k) => k.type === OBJ.Text && isVisible(k));
     let box = null;
-    const stacked = label && stackedLabel(s, label, pos);
-    if (stacked) {
+    const isotope = X.int(c.props[P.Isotope]) || 0;
+    const z = X.int(c.props[P.Element]); const element = z == null ? 6 : z;
+    const stacked = label && stackedLabel(s, label, pos, isotope);
+    if (!label && isotope > 0 && element === 6 && X.int(c.props[P.NodeType]) == null) {
+      // a labelled carbon written without a label (Reactio Draw): ¹³C with its hydrogens, on the side away from the bonds
+      const at = bondsAt.get(c.id) || [];
+      const valence = at.reduce((t, q) => t + q.order, 0); const charge = X.int(c.props[P.Charge]) || 0;
+      const given = X.int(c.props[P.NumHydrogens]);
+      const nh = given != null ? given : Math.max(0, 4 - Math.round(valence) - Math.abs(charge));
+      const hs = nh ? (nh > 1 ? `H${nh}` : 'H') : '';
+      const dx = at.reduce((t, q) => { const p = posOf.get(q.other); return t + (p ? p.x - pos.x : 0); }, 0);
+      const size = s.fontSize; const half = 0.361 * size; const base = pos.y + 0.358 * size; const digits = String(isotope);
+      const w = digits.length * SUP_DIGIT_EM * size;
+      const run = { start: 0, face: 96, size, color: X.uint(c.props[P.Foreground]) || 0 };
+      if (hs && dx > 0.01) {
+        // bonds to the right: H₃¹³C, written leftwards from the carbon
+        out.labels.push(textSVG(s, insertSuperscript({ text: `${hs}C`, runs: [run] }, hs.length, digits), pos.x + half, base, 'end'));
+        box = { cx: pos.x, cy: pos.y, ax: half + s.marginWidth, ay: 0.36 * size + s.marginWidth };
+        bounds.push({ left: pos.x - half - w - hs.length * 0.6 * size, right: pos.x + half, top: pos.y - 0.72 * size, bottom: pos.y + 0.5 * size });
+      } else {
+        out.labels.push(textSVG(s, { text: digits, runs: [{ ...run, face: 0x40 }] }, pos.x - half, base, 'end'));
+        out.labels.push(textSVG(s, { text: `C${hs}`, runs: [run] }, pos.x - half, base, 'start'));
+        box = { cx: pos.x, cy: pos.y, ax: half + s.marginWidth, ay: 0.36 * size + s.marginWidth };
+        bounds.push({ left: pos.x - half - w, right: pos.x + half + hs.length * 0.6 * size, top: pos.y - 0.72 * size, bottom: pos.y + 0.5 * size });
+      }
+    } else if (stacked) {
       out.labels.push(...stacked.svg);
       box = stacked.box;
       const bb = X.rect(label.props[P.BBox]); if (bb) bounds.push(bb);
@@ -920,11 +1013,32 @@ function renderFragment(s, frag, out, bounds) {
       // centre on the capital letters (cap height ≈ 0.72 em); margin = document MarginWidth
       box = { cx: (l + r) / 2, cy: tp.y - 3.6, ax: (r - l) / 2 + m, ay: 3.6 + m };
       let str = X.cdxString(label.props[P.Text]);
-      if (right) str = reverseLabel(str);
       // Justification 1 = centred on the atom (ChemDraw uses it for e.g. "Si" after a re-layout)
       const centred = !right && (X.int(label.props[P.Justification]) === 1 || X.int(label.props[P.LabelJustification]) === 1);
+      const digits = isotope > 0 ? String(isotope) : '';
+      const named = element === 1 && /^\s*[DT]/.test(str.text) && ((isotope === 2 && /^\s*D/.test(str.text)) || (isotope === 3 && /^\s*T/.test(str.text)));
+      const written = digits && str.text.startsWith(digits) && /^[A-Z]/.test(str.text.slice(digits.length));
+      const size = (str.runs && str.runs[0] && str.runs[0].size) || s.fontSize;
+      let prefix = null; let added = 0;                       // a mass number drawn left of the label; width added
+      if (digits && !named && written && !right) {
+        str = superscriptRange(str, 0, digits.length);       // ChemDraw "15N", "13CH3": the number already in place
+      } else if (digits && !named) {
+        if (written) str = { text: str.text.slice(digits.length), runs: (str.runs || []).map((r) => ({ ...r, start: Math.max(0, r.start - digits.length) })) };
+        if (right) {
+          str = reverseLabel(str);
+          const lastEl = [...str.text.matchAll(/[A-Z][a-z]?/g)].pop();
+          str = insertSuperscript(str, lastEl ? lastEl.index : 0, digits); added = written ? 0 : digits.length * SUP_DIGIT_EM * size;
+        } else if (centred) {
+          str = insertSuperscript(str, 0, digits); added = digits.length * SUP_DIGIT_EM * size;
+        } else {
+          prefix = textSVG(s, { text: digits, runs: [{ ...((str.runs && str.runs[0]) || { size, color: 0 }), start: 0, face: 0x40 }] }, tp.x, tp.y, 'end');
+          added = digits.length * SUP_DIGIT_EM * size;
+        }
+      } else if (right) str = reverseLabel(str);
       out.labels.push(textSVG(s, str, tp.x, tp.y, right ? 'end' : centred ? 'middle' : 'start'));
-      if (bb) bounds.push(bb);
+      if (prefix) out.labels.push(prefix);
+      // the number sits high, above bonds that come from the side: the bonds are cut at the letters only
+      if (bb) bounds.push(added ? { ...bb, left: bb.left - added } : bb);
     }
     nodes.set(c.id, { pos, box });
     bounds.push({ left: pos.x, right: pos.x, top: pos.y, bottom: pos.y });
@@ -1648,6 +1762,22 @@ const ELECTRON = 0.00054857990946;
  * hydrates, with an optional leading multiplier) and a charge "+", "2-" at the end of a part.
  * Returns null for anything else (unknown element, brackets).
  */
+// Isotopes used as labels that are not in the natural composition above (radiolabels); masses: AME2020.
+const LABEL_MASSES = {
+  '3H': 3.0160492779, '11C': 11.0114336, '14C': 14.0032419884, '13N': 13.0057386, '15O': 15.0030656, '18F': 18.0009373,
+  '32P': 31.9739076, '33P': 32.9717257, '35S': 34.9690323, '125I': 124.9046302, '131I': 130.9061246,
+};
+/** A labelled atom ("15N", "13C", "2H"): every such atom is that isotope ([[mass, 1]]); null if the mass is not known */
+function labelIsotope(key) {
+  const m = /^(\d+)([A-Z][a-z]?)$/.exec(key); if (!m) return null;
+  const a = Number(m[1]); const el = m[2] === 'D' ? 'H' : m[2];
+  const nat = (ISOTOPES[el] || []).find(([mass]) => Math.round(mass) === a);
+  const mass = nat ? nat[0] : LABEL_MASSES[`${a}${el}`];
+  return mass ? [[mass, 1]] : null;
+}
+/** Isotopes of an element ("N") or of a labelled atom ("15N") */
+const isotopesOf = (key) => ISOTOPES[key] || labelIsotope(key);
+
 function parseFormula(text) {
   const counts = {}; let charge = 0;
   const parts = String(text || '').replace(/[−–]/g, '-').split(/[.·•]/).map((x) => x.trim()).filter(Boolean);
@@ -1663,11 +1793,13 @@ function parseFormula(text) {
     const after = !apart && part.match(/([+-])(\d*)\s*$/);
     if (apart) { charge += Number(apart[1] || 1) * (apart[2] === '-' ? -1 : 1) * mult; part = part.slice(0, apart.index); }
     else if (after) { charge += Number(after[2] || 1) * (after[1] === '-' ? -1 : 1) * mult; part = part.slice(0, after.index); }
-    part = part.replace(/\s+/g, '').replace(/^\[(.*)\]$/, '$1');
-    if (!/^([A-Z][a-z]?\d*)+$/.test(part)) return null;
-    for (const [, el, n] of part.matchAll(/([A-Z][a-z]?)(\d*)/g)) {
-      if (!ISOTOPES[el]) return null;
-      counts[el] = (counts[el] || 0) + (n === '' ? 1 : Number(n)) * mult;
+    part = part.replace(/\s+/g, '').replace(/^\[([^\[\]]*)\]$/, '$1');
+    // a labelled atom is written with its mass number in brackets, as ChemDraw and Reactio Draw write it: C16H11N2[15N]
+    if (!/^([A-Z][a-z]?\d*|\[\d+[A-Z][a-z]?\]\d*)+$/.test(part)) return null;
+    for (const [, label, ln, el, n] of part.matchAll(/\[(\d+[A-Z][a-z]?)\](\d*)|([A-Z][a-z]?)(\d*)/g)) {
+      const key = label || el; const digits = label ? ln : n; const count = digits === '' ? 1 : Number(digits);
+      if (!isotopesOf(key)) return null;
+      counts[key] = (counts[key] || 0) + count * mult;
     }
   }
   return { counts, charge };
@@ -1703,12 +1835,12 @@ function massSpectrum({ counts, charge }, { minPercent = 1 } = {}) {
   const fix = (m) => (m - charge * ELECTRON) / z;
   let exact = 0;
   for (const [el, n] of Object.entries(counts)) {
-    const top = ISOTOPES[el].reduce((a, b) => (b[1] > a[1] ? b : a));
+    const top = isotopesOf(el).reduce((a, b) => (b[1] > a[1] ? b : a));
     exact += top[0] * n;
   }
   let dist = [[0, 1]];
   for (const [el, n] of Object.entries(counts)) {
-    const pattern = elementPattern(ISOTOPES[el], n, 1e-10);
+    const pattern = elementPattern(isotopesOf(el), n, 1e-10);
     const next = [];
     for (const [m1, p1] of dist) for (const [m2, p2] of pattern) { const p = p1 * p2; if (p >= 1e-10) next.push([m1 + m2, p]); }
     dist = next;
@@ -1747,9 +1879,9 @@ function massCaption(formulaText, { maxChars = 60, minPercent = 1 } = {}) {
   const formula = [{ t: 'Chemical Formula: ' }];
   for (const piece of v.formula.split(/([.·•])/)) {
     let last = 0;
-    for (const m of piece.matchAll(/(\d+)(?=[+-]?$)|(?<=[A-Za-z)])(\d+)|([+-]\d*|\d+[+-])$/g)) {
+    for (const m of piece.matchAll(/(?<=\[)(\d+)(?=[A-Z][a-z]?\])|(\d+)(?=[+-]?$)|(?<=[A-Za-z)\]])(\d+)|([+-]\d*|\d+[+-])$/g)) {
       if (m.index > last) formula.push({ t: piece.slice(last, m.index) });
-      if (m[3] !== undefined) formula.push({ t: m[3], sup: true }); else formula.push({ t: m[1] || m[2], sub: true });
+      if (m[1] !== undefined || m[4] !== undefined) formula.push({ t: m[1] || m[4], sup: true }); else formula.push({ t: m[2] || m[3], sub: true });
       last = m.index + m[0].length;
     }
     if (last < piece.length) formula.push({ t: piece.slice(last) });

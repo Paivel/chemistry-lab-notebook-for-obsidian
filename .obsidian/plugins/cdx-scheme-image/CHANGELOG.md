@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.8.13 — 2026-11-16
+- **Labelled atoms (isotopes).** An atom with a mass number (Isotope in the file: ¹⁵N, ¹³C) is drawn with the number as a superscript before the element, as ChemDraw and Reactio Draw show it. Reactio Draw writes the label without the number (`N`) and a labelled carbon without any label: the plugin adds the number, and for such a carbon the label with its hydrogens (H₃¹³C, ¹³CH₂…), written on the side away from the bonds. A ChemDraw label that already holds the number (`13CH3`) keeps it, raised; D and T stay as they are.
+- In formulas the mass number in brackets is raised, not lowered: `C16H11N2[15N]` → C₁₆H₁₁N₂[¹⁵N] in the reagent table (ChemDraw and Reactio Draw tables) and `Na[15N]O2` typed next to the arrow → Na[¹⁵N]O₂. Other numbers in brackets in plain text (`[15]`) stay as written.
+- **Mass picture of a labelled product.** `Mass_pic::` was not made for a formula such as `C16H11N2[15N]` (the formula was not understood). Now every bracketed atom counts as that isotope: Exact Mass 246.0923 for C₁₆H₁₁N₂[¹⁵N]; radiolabels (³H, ¹¹C, ¹⁴C, ¹⁸F, ³²P, ³⁵S, ¹²⁵I, ¹³¹I and others) from AME2020 masses.
+- Pictures of files without labelled atoms are unchanged (snapshot tests byte-identical).
+
 ## 1.8.12 — 2026-11-03
 - **Mass picture of an ion** (`Mass_pic::`): the formula of a charged product from ChemDraw's reagent table, such as `C7H5O3-` or `C25H20Cl2N3+`, was read with the digits before the sign as the size of the charge (charge −3 and one O), so Exact Mass and m/z were wrong (35.0119 instead of 137.0244; 134.6985 instead of 432.1029). The digits before the sign are now the element's count — as ChemDraw writes ions in its table and as the formula line of the picture always showed them (O₃⁻). A charge of more than 1 is read after the sign (`+2`, `-2`) or set apart by `^`, a space or a bracket (`^2-`, `]2-`).
 - The m/z of the most abundant peak is printed from the same mass as Exact Mass (before, it was rounded to 10⁻⁶ first, so benzene showed Exact Mass 78.0470 but m/z 78.0469). The pictures of the example reactions are unchanged.
