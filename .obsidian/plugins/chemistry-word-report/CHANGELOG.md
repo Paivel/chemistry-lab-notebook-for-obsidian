@@ -1,7 +1,7 @@
 # Changelog
 
 ## 1.2.4 — 2026-11-16
-- `[[mass]] mg` and `[[calcmass]] mg` of 1 g or more are written in g with two decimals (`2.06 g`), below 1 g in mg as before (`71 mg`, `6.5 mg`). This follows CDX Scheme Image 1.8.13, which writes `mass::` of 1 g or more in g; an older `mass:: 2057.0 mg` also gives `2.06 g`.
+- `[[mass]] mg` and `[[calcmass]] mg` of 1 g or more are written in g, two decimals at most and without trailing zeros (`2.06 g`, `1.2 g`); below 1 g in mg as before (`71 mg`, `6.5 mg`). This follows CDX Scheme Image 1.8.13, which writes `mass::` of 1 g or more in g; an older `mass:: 2057.0 mg` also gives `2.06 g`.
 
 ## 1.2.3 — 2026-11-04
 Prepared for the Obsidian community directory.

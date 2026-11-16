@@ -11,7 +11,7 @@ tags:
 ![[IM_00 scheme.svg]]
 
 **yield**::57%
-**mass**::775.0 mg
+**mass**::775 mg
 **num_in_article**::11
 **needed**::
 

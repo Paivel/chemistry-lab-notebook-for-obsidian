@@ -1504,16 +1504,17 @@ function formatYield(percent) {
   return Number(two) > 0 ? `${two}%` : `${Number(percent.toPrecision(1))}%`;
 }
 
-/** Product mass for the note: below 1 g in mg with one decimal ("71.00mg" -> "71.0 mg"; below 0.1 mg two decimals or
- * one significant digit, "0.03 mg", so a small mass never reads as 0.0); from 1 g on in g with two decimals, as the
- * reagent table shows it ("2.057 g" -> "2.06 g") */
+/** Product mass for the note, as the reagent table shows it but without trailing zeros: below 1 g in mg ("716.00 mg"
+ * -> "716 mg", "25.70 mg" -> "25.7 mg", "312.19 mg"), from 1 g on in g ("2.06 g", "1.20 g" -> "1.2 g"); two decimals
+ * at most, and below 0.005 mg one significant digit ("0.003 mg"), so a small mass never reads as 0 */
 function formatMass(grams) {
   const mg = grams * 1000;
-  if (!(mg > 0)) return '0.0 mg';
-  if (Math.round(mg * 10) / 10 >= 1000) return `${(Math.round(grams * 100 + 1e-9 * Math.max(1, grams * 100)) / 100).toFixed(2)} g`;
-  if (mg >= 0.095) return `${(Math.round(mg * 10) / 10).toFixed(1)} mg`;
-  const two = (Math.round(mg * 100) / 100).toFixed(2);
-  return Number(two) > 0 ? `${two} mg` : `${Number(mg.toPrecision(1))} mg`;
+  if (!(mg > 0)) return '0 mg';
+  const r2 = (x) => Math.round(x * 100 + 1e-9 * Math.max(1, x * 100)) / 100;
+  const plain = (x) => x.toFixed(2).replace(/\.?0+$/, '');
+  if (r2(mg) >= 1000) return `${plain(r2(grams))} g`;
+  if (r2(mg) > 0) return `${plain(r2(mg))} mg`;
+  return `${Number(mg.toPrecision(1))} mg`;
 }
 
 /**
@@ -1524,8 +1525,8 @@ function formatMass(grams) {
  * Reactio Draw file the record says so); 0 % or an empty yield with no mass clears the field. A yield of 0 % (below
  * 0.0001 %) or an empty yield next to a weighed mass above 0 is a contradiction (often a wrong MW or scale in the
  * table): yield '' with conflict { key: 'yield', reason, mass } — the field is cleared under the provenance rule and the
- * plugin always tells the user. mass: the measured product mass, below 1 g in mg with one decimal, from 1 g on in g with
- * two decimals (see formatMass).
+ * plugin always tells the user. mass: the measured product mass, below 1 g in mg, from 1 g on in g, without trailing
+ * zeros (see formatMass).
  * mw: as ChemDraw shows it.
  */
 function productValues(buf, productId) {
@@ -1569,13 +1570,13 @@ function productValues(buf, productId) {
 /** Yield only (kept for callers and tests) */
 const productYield = (buf, productId) => productValues(buf, productId).yield;
 
-// a value the plugin may replace: a number, with % or a mass unit ("82%", "71.0 mg", "1.2 g")
+// a value the plugin may replace: a number, with % or a mass unit ("82%", "71 mg", "71.0 mg", "1.2 g")
 const NUMBER = /^\d+(?:[.,]\d+)?\s*(?:%|mg|g|µg|μg|ug)?$/i;
 const escape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 /**
  * Sets an existing "<key>::" field (also **key**::) to `value` when it is empty or holds a number
- * ("82%", "82", "432.3", "71.0 mg"). Text written by hand ("n.r.", "traces", "n.d.", "not isolated") is kept.
+ * ("82%", "82", "432.3", "71 mg"). Text written by hand ("n.r.", "traces", "n.d.", "not isolated") is kept.
  * value '' clears a number. A missing field is not added. Returns the new text, or null if nothing changes.
  */
 function placeField(text, key, value) {
@@ -2789,7 +2790,7 @@ class CdxSchemeImageSettingTab extends PluginSettingTab {
       .addSlider((sl) => sl.setLimits(2, 8, 1).setValue(s.scale).setDynamicTooltip()
         .onChange(async (v) => { s.scale = v; await this.plugin.saveSettings(); }));
     toggle('White background', 'Off = transparent background.', 'whiteBackground');
-    toggle('Product mass in mass::', 'If the reaction has exactly one product and the reagent table shows its measured mass, write it into the existing mass:: field of the note (e.g. 71.0 mg). When the mass is removed from the table, a number written there before is cleared. A mass:: written as text (not isolated) is not changed.', 'productMass');
+    toggle('Product mass in mass::', 'If the reaction has exactly one product and the reagent table shows its measured mass, write it into the existing mass:: field of the note (below 1 g in mg, e.g. 71 mg or 25.7 mg; from 1 g on in g, e.g. 2.06 g). When the mass is removed from the table, a number written there before is cleared. A mass:: written as text (not isolated) is not changed.', 'productMass');
     toggle('Yield in yield::', 'If the reaction has exactly one product and the reagent table shows its yield, write it into the existing yield:: field of the note (e.g. 82%; below 1 % with one decimal, 0.4%). A product mass corrected to 0 gives 0%; when the yield disappears from the table (mass removed), a number written there before is cleared. A yield:: written as text (n.r., traces, n.d.) is not changed.', 'productYield');
     toggle('MW in MW::', 'If the reaction has exactly one product, write its molecular weight from the reagent table into the existing MW:: field of the note (as ChemDraw shows it, e.g. 432.35). A value written as text is not changed.', 'productMW');
     toggle('Conditions in temperature::, time::, atmosphere::, other::', 'Take the reaction conditions from the file — a caption with the lines "Temperature: …", "Time: …", "Atmosphere: …", "Other: …" (Reactio Draw writes it; a caption typed like this in ChemDraw works too), or the conditions of a Reactio Draw document — and write them into the existing fields of the note. An empty field is filled; a value typed by hand is kept; a value written from the file before is updated. Schemes with several such captions (several steps) are left out.', 'conditions');

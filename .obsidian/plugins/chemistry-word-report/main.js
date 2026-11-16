@@ -23702,8 +23702,8 @@ function dropEmptySections(line, data) {
 }
 
 // "[[mass]] mg" without a mass: the placeholder "[mass not recorded]" stands without the unit; a mass typed as text
-// ("not isolated") too. A mass of 1 g or more is written in g with two decimals, as the reagent table shows it
-// (mass:: "2.06 g" or "2057.0 mg" -> "2.06 g"); below 1 g it stays in mg.
+// ("not isolated") too. A mass of 1 g or more is written in g, two decimals at most and without trailing zeros, as the
+// note shows it (mass:: "2.06 g" or "2057.0 mg" -> "2.06 g", "1.2 g" -> "1.2 g"); below 1 g it stays in mg.
 function unitOfMissingMass(line, data) {
   return String(line).replace(/\[\[\s*(mass|calcmass)\s*\]\]([ \t]*)mg\b/g, (m, key, space) => {
     const v = resolvePlaceholder(key, { ...data }); // a copy: nothing is recorded in the report here
@@ -23712,7 +23712,7 @@ function unitOfMissingMass(line, data) {
     const mg = measured && measured.mg != null ? measured.mg : Number(v);
     if (!(mg >= 999.5)) return m;
     const roundHalfUp = (x, digits) => { const f = 10 ** digits; return Math.round(x * f + 1e-9 * Math.max(1, Math.abs(x * f))) / f; };
-    return `${roundHalfUp(mg / 1000, 2).toFixed(2)}${space}g`;
+    return `${roundHalfUp(mg / 1000, 2).toFixed(2).replace(/\.?0+$/, "")}${space}g`;
   });
 }
 

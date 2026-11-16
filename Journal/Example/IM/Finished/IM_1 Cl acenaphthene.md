@@ -12,7 +12,7 @@ tags:
 ![[IM_1 scheme.svg]]
 
 **yield**::82%
-**mass**::71.0 mg
+**mass**::71 mg
 **MW**::432.35
 **scale**::0.2
 **procedure**::A
