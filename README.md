@@ -7,6 +7,7 @@
   <img src="https://img.shields.io/badge/Obsidian-vault-7c5cff?logo=obsidian&logoColor=white" alt="Obsidian vault">
   <img src="https://img.shields.io/badge/platform-Windows%20%7C%20macOS-555" alt="Platform: Windows | macOS">
   <img src="https://img.shields.io/badge/works-offline-2e9d6b" alt="Works offline">
+  <a href="https://doi.org/10.26434/chemrxiv.15012303/v1"><img src="https://img.shields.io/badge/ChemRxiv-10.26434%2Fchemrxiv.15012303-0b6e99" alt="Preprint on ChemRxiv"></a>
 </p>
 
 <p align="center">
@@ -183,7 +184,11 @@ AI assistants (Claude by Anthropic and ChatGPT by OpenAI) were used during the d
 
 ## Citation
 
-If this workflow contributes to research or a publication, please cite it using the metadata in [CITATION.cff](CITATION.cff). GitHub can display the recommended citation automatically.
+The notebook is described in the preprint:
+
+> Sakharov, P.; Gandelman, M. Chemistry Lab Notebook for Obsidian: An ELN for CDX and CDXML Reaction Files. *ChemRxiv* **2026**. DOI: [10.26434/chemrxiv.15012303/v1](https://doi.org/10.26434/chemrxiv.15012303/v1)
+
+If this workflow contributes to research or a publication, please cite the preprint. The same metadata are in [CITATION.cff](CITATION.cff), from which GitHub shows the recommended citation (*Cite this repository*).
 
 ## Author
 

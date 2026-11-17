@@ -1,11 +1,12 @@
 cff-version: 1.2.0
-message: "If you use this software or workflow in your research, please cite it using the metadata below."
+message: "If you use this software or workflow in your research, please cite the preprint below (preferred-citation)."
 title: "Chemistry Lab Notebook for Obsidian"
 type: software
 authors:
   - family-names: "Sakharov"
     given-names: "Pavel"
-    affiliation: "Technion – Israel Institute of Technology"
+    affiliation: "Schulich Faculty of Chemistry, Technion – Israel Institute of Technology"
+    orcid: "https://orcid.org/0000-0001-7746-7387"
 license: MIT
 repository-code: "https://github.com/Paivel/chemistry-lab-notebook-for-obsidian"
 # For each release add version: "X.Y.Z" and date-released: "YYYY-MM-DD" here (the release workflow checks them).
@@ -22,3 +23,20 @@ keywords:
   - Obsidian
   - reproducible research
   - chemical structure search
+preferred-citation:
+  type: article
+  title: "Chemistry Lab Notebook for Obsidian: An ELN for CDX and CDXML Reaction Files"
+  authors:
+    - family-names: "Sakharov"
+      given-names: "Pavel"
+      affiliation: "Schulich Faculty of Chemistry, Technion – Israel Institute of Technology, Haifa 3200009, Israel"
+      orcid: "https://orcid.org/0000-0001-7746-7387"
+    - family-names: "Gandelman"
+      given-names: "Mark"
+      affiliation: "Schulich Faculty of Chemistry and The Resnick Sustainability Center for Catalysis, Technion – Israel Institute of Technology, Haifa 3200009, Israel"
+      orcid: "https://orcid.org/0000-0002-9651-2902"
+  journal: "ChemRxiv"
+  status: preprint
+  year: 2026
+  doi: "10.26434/chemrxiv.15012303/v1"
+  url: "https://doi.org/10.26434/chemrxiv.15012303/v1"
