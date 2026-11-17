@@ -52,7 +52,7 @@ The plugin has no npm dependencies (the docx library is vendored in `src/vendor/
 
 ## Tests
 
-The tests are in the plugin's source repository (with the sources and fixtures), not in the vault's plugin folder.
+The tests are in the plugin's source repository (with the sources and fixtures; it will be published on GitHub soon), not in the vault's plugin folder.
 
 Plain Node.js scripts (Node 22, no dependencies), run in this folder; each prints `PASS`/`FAIL` per check, ends with `N/M passed` and exits non-zero on a failure. `<vault>` is the published example vault; it is only read (reports go to temporary folders or a temporary copy of the vault).
 

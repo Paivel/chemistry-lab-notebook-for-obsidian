@@ -27,7 +27,7 @@ None needed: the plugin makes no network requests and needs no account. It reads
 
 ## Tests
 
-The tests are in the plugin's source repository (with the sources and fixtures), not in the vault's plugin folder.
+The tests are in the plugin's source repository (with the sources and fixtures; it will be published on GitHub soon), not in the vault's plugin folder.
 
 Node 22, no dependencies, run in this folder. Each script prints `PASS`/`FAIL` per check and `N/M passed`, and exits non-zero on a failure. Fixtures: `../fixtures/`.
 

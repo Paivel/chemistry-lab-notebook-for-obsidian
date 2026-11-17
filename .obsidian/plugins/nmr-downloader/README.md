@@ -146,7 +146,7 @@ browser with the data folders. **F6** cycles through the windows,
 - *Google hasn't verified this app* - expected for your own app: **Advanced** > **Go to … (unsafe)** (step B.2).
 
 ## Tests
-The tests are in the plugin's source repository (with the sources and fixtures), not in the vault's plugin folder.
+The tests are in the plugin's source repository (with the sources and fixtures; it will be published on GitHub soon), not in the vault's plugin folder.
 
 Node.js 18 or later, no `npm install`, no network: Google sign-in and the Gmail API are a fake server on 127.0.0.1 (set through `testHooks.endpoints`), Obsidian is mocked and the ZIP files are built by the tests.
 ```

@@ -21,7 +21,7 @@ None: no network requests, no account. The plugin reads the project templates an
 `node build.mjs` bundles `src/` into `main.js` (needs `../tools/bundle.mjs`; `obsidian` and `@codemirror/state` come from Obsidian).
 
 ## Tests
-The tests are in the plugin's source repository (with the sources and fixtures), not in the vault's plugin folder.
+The tests are in the plugin's source repository (with the sources and fixtures; it will be published on GitHub soon), not in the vault's plugin folder.
 
 Plain Node.js scripts (Node 22, no dependencies), run in this folder; each prints `PASS`/`FAIL` per check, ends with `N/M passed` and exits non-zero on a failure. The vault is optional (default `../fixtures/vault`; the published example vault works too) and is only read.
 - `node tests/skeleton.test.js ["<vault>"]` — skeleton from the templates, missing parts and Restore on the example notes, protected ranges, table shapes, template changes.

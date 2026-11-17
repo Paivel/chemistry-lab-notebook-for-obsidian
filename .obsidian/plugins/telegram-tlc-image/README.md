@@ -40,7 +40,7 @@ The TLC table is the first table in the note whose first row contains "TLC"; the
 The design follows common practice for Telegram bots (allowed users, token kept out of the vault); no code from other Telegram plugins is used.
 
 ## Tests
-The tests are in the plugin's source repository (with the sources and fixtures), not in the vault's plugin folder.
+The tests are in the plugin's source repository (with the sources and fixtures; it will be published on GitHub soon), not in the vault's plugin folder.
 
 Node.js 18 or later, no `npm install`, no network: the bot talks to a fake Telegram Bot API on 127.0.0.1, Obsidian is mocked and the vault is a Map in memory.
 ```
