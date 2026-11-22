@@ -72,7 +72,7 @@ Nothing has to be added under *Data access* (scopes): the plugin asks for Gmail 
    *Import from nmr_settings.env*.
 
 ## Use
-Ribbon icon (download arrow) or command **Download NMR spectra**. The plugin takes unread messages with
+Ribbon icon (download arrow), command **Download NMR spectra**, or a shortcut that works in every program (see *Shortcut in every program* below). The plugin takes unread messages with
 attachments from the sender and saves every `.zip` whose name contains the user name to the Download folder.
 Only archives named `PREFIX_NAME<MHz>-<year>_<number>` (MHz: 3 digits, year: 4 digits) are unpacked to the
 right folder and opened (`1r` / `2rr` / `acqu`) in MestReNova; others stay in the Download folder.
@@ -102,6 +102,18 @@ spectra are opened: **By tens** (default) puts experiments 10–19 of one spectr
 document, 20–29 into the next, and so on (through a small MestReNova script written to the temp folder);
 **Each experiment separately** opens every experiment on its own; **Archive number only** opens one spectrum
 per archive, as the old Python script did.
+
+### Shortcut in every program (a mouse button)
+Settings → **Run** → **Shortcut in every program**: click **Record** and press the keys (for example
+Ctrl+Alt+Shift+N), or type them (`Ctrl+Alt+Shift+N`, `F9`). The download then starts from any program, also with
+Obsidian minimized; Obsidian has to be running with the vault open. To start it with a mouse button, give the button
+the same keyboard shortcut in the mouse software (Logi Options+: the button's keyboard-shortcut action, set for all
+applications rather than for one program). While Obsidian is in the background, a system notification tells when the
+download starts and how it ended; the spectra open in MestReNova or TopSpin as usual. The keys must be free: when
+another program, or NMR Downloader in another open vault, already uses them, the setting shows *Not set up* with the
+reason — choose other keys. **Clear** (or an empty field) turns it off; the keys are released when the plugin is
+disabled or Obsidian quits. It uses Obsidian's (Electron's) system-wide shortcuts; on Linux it needs an X11 session
+(under Wayland, system-wide shortcuts may not reach Obsidian).
 
 ### Bruker TopSpin
 Set **Open downloaded spectra in** to *TopSpin* and press **Check TopSpin** (it looks for `topspin.cmd` in
@@ -155,6 +167,7 @@ node tests/zip.test.js      # unpacking: path traversal, links, limits, size and
 node tests/mail.test.js     # exact sender, Authentication-Results, a whole run (mail marked read only after unpacking)
 node tests/signin.test.js   # sign-in in local storage (enc1:/plain1:), migration from data.json, Authorize, Sign out
 node tests/fields.test.js   # NMR_id:: / frequency:: parsing without slow backtracking
+node tests/shortcut.test.js # shortcut in every program: keys, Record/Clear, taken keys, system notifications
 ```
 Each prints `PASS` / `FAIL` per check and `N/M passed`, and exits non-zero on a failure.
 

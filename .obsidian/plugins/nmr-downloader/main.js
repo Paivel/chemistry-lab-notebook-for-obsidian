@@ -63,7 +63,49 @@ const DEFAULT_SETTINGS = {
 	notebooks: [], // [{ code: 'Exp', number: '01' }]
 	pageDigits: 4, // digits of the note number in the folder name (3: up to 999, 4: up to 9999)
 	pageSearchFolders: '', // folders with these spectra, one per line (empty = the spectra folders above)
+	globalShortcut: '', // keys that start the download in every program, also with Obsidian minimized ('' = off)
 };
+
+/* ========================================================================== */
+/* Shortcut in every program                                                  */
+/* ========================================================================== */
+
+const KEY_NAMES = {
+	ArrowUp: 'Up', ArrowDown: 'Down', ArrowLeft: 'Left', ArrowRight: 'Right', Space: 'Space', Enter: 'Enter', Tab: 'Tab',
+	Insert: 'Insert', Delete: 'Delete', Home: 'Home', End: 'End', PageUp: 'PageUp', PageDown: 'PageDown', Backquote: '`',
+	Minus: '-', Equal: '=', BracketLeft: '[', BracketRight: ']', Semicolon: ';', Quote: "'", Comma: ',', Period: '.', Slash: '/',
+	Backslash: '\\', Pause: 'Pause', ScrollLock: 'Scrolllock', PrintScreen: 'PrintScreen',
+};
+/**
+ * The Electron accelerator ("Ctrl+Alt+Shift+N") of a key press, from the key's place (e.code), so it does not depend
+ * on the keyboard layout; null for a modifier alone, or for a key without Ctrl/Alt/Cmd that would stop it from being
+ * typed in every program (F1–F24 alone are allowed: mouse programs often send them).
+ */
+function acceleratorFromEvent(e, platform = process.platform) {
+	const mods = [];
+	if (e.ctrlKey) mods.push('Ctrl');
+	if (e.metaKey) mods.push(platform === 'darwin' ? 'Cmd' : 'Super');
+	if (e.altKey) mods.push('Alt');
+	if (e.shiftKey) mods.push('Shift');
+	const c = String(e.code || '');
+	let key = null;
+	if (/^Key[A-Z]$/.test(c)) key = c.slice(3);
+	else if (/^Digit\d$/.test(c)) key = c.slice(5);
+	else if (/^F([1-9]|1\d|2[0-4])$/.test(c)) key = c;
+	else if (/^Numpad\d$/.test(c)) key = 'num' + c.slice(6);
+	else key = KEY_NAMES[c] || null;
+	if (!key) return null;
+	const strong = mods.some((m) => m !== 'Shift');
+	if (!strong && !/^F\d+$/.test(key)) return null;
+	return [...mods, key].join('+');
+}
+/** "ctrl + alt+shift+n", "Control+Option+N" -> "Ctrl+Alt+Shift+N" ('' stays '') */
+function normalizeAccelerator(text) {
+	const parts = String(text || '').split('+').map((p) => p.trim()).filter(Boolean);
+	const names = { ctrl: 'Ctrl', control: 'Ctrl', alt: 'Alt', option: 'Alt', shift: 'Shift', cmd: 'Cmd', command: 'Cmd',
+		super: 'Super', win: 'Super', meta: 'Super', cmdorctrl: 'CmdOrCtrl', commandorcontrol: 'CmdOrCtrl' };
+	return parts.map((p, i) => (i < parts.length - 1 ? names[p.toLowerCase()] || p : p.length === 1 ? p.toUpperCase() : p.replace(/^f(\d+)$/i, 'F$1'))).join('+');
+}
 
 /* ========================================================================== */
 /* Secrets on this computer                                                   */
@@ -1816,6 +1858,65 @@ class NmrDownloaderPlugin extends obsidian.Plugin {
 			callback: () => this.askAndOpenTopSpin(),
 		});
 		this.addSettingTab(new NmrSettingTab(this.app, this));
+		this.register(() => this.clearGlobalShortcut());
+		this.app.workspace.onLayoutReady(() => {
+			const r = this.applyGlobalShortcut();
+			if (!r.ok) new obsidian.Notice(`NMR Downloader: the shortcut ${this.settings.globalShortcut} could not be set up: ${r.why}`, 12000);
+		});
+	}
+
+	/** Electron's globalShortcut (main process, through remote); tests give their own */
+	globalShortcutApi() {
+		if (this.testHooks && this.testHooks.globalShortcut) return this.testHooks.globalShortcut;
+		const electron = require('electron');
+		const remote = electron.remote || require('@electron/remote');
+		return remote.globalShortcut;
+	}
+
+	/**
+	 * Registers settings.globalShortcut for the whole computer: the download then starts from any program, also with
+	 * Obsidian minimized (while it runs). { ok, why } — why: the keys are taken (another program, or this plugin in
+	 * another open vault), not a key combination, or no system shortcuts in this Obsidian.
+	 */
+	applyGlobalShortcut() {
+		this.clearGlobalShortcut();
+		const acc = normalizeAccelerator(this.settings.globalShortcut);
+		if (!acc) return { ok: true, off: true };
+		let gs;
+		try {
+			gs = this.globalShortcutApi();
+		} catch (e) {
+			return { ok: false, why: 'this Obsidian version does not let plugins set system shortcuts' };
+		}
+		let done = false;
+		try {
+			done = gs.register(acc, () => this.runDownload({ fromShortcut: true }));
+		} catch (e) {
+			return { ok: false, why: `"${acc}" is not a key combination (${e.message})` };
+		}
+		if (!done) return { ok: false, why: 'the keys are taken by another program or by NMR Downloader in another open vault' };
+		this.registeredShortcut = acc;
+		return { ok: true, acc };
+	}
+
+	clearGlobalShortcut() {
+		if (!this.registeredShortcut) return;
+		try {
+			this.globalShortcutApi().unregister(this.registeredShortcut);
+		} catch (e) {
+			/* Obsidian is closing */
+		}
+		this.registeredShortcut = null;
+	}
+
+	/** A message of the system (for a download started with the shortcut while Obsidian is in the background) */
+	systemNotify(text) {
+		if (this.testHooks && this.testHooks.notify) return this.testHooks.notify(text);
+		try {
+			new window.Notification('NMR Downloader', { body: String(text).slice(0, 300) });
+		} catch (e) {
+			/* no system messages: the notices in Obsidian remain */
+		}
 	}
 
 	/**
@@ -2084,17 +2185,22 @@ class NmrDownloaderPlugin extends obsidian.Plugin {
 		}
 	}
 
-	async runDownload() {
+	async runDownload(opts = {}) {
+		// started with the system-wide shortcut while Obsidian is in the background: messages of the system as well
+		const away = Boolean(opts.fromShortcut) && !(this.testHooks && 'focused' in this.testHooks ? this.testHooks.focused : document.hasFocus());
 		if (this.running) {
 			new obsidian.Notice('NMR download is already running');
+			if (away) this.systemNotify('The download is already running.');
 			return;
 		}
 		const { cfg, problems } = prepareConfig(this.settings);
 		if (problems.length) {
 			new obsidian.Notice('NMR Downloader: please finish the settings:\n- ' + problems.join('\n- '), 15000);
+			if (away) this.systemNotify('Please finish the settings of NMR Downloader in Obsidian.');
 			return;
 		}
 		this.running = true;
+		if (away) this.systemNotify('Checking mail for NMR spectra…');
 		const lines = [];
 		const waiting = new obsidian.Notice('NMR: checking mail, please wait...', 0);
 		const status = (m) => waiting.setMessage('NMR: ' + m + ' - please wait...');
@@ -2113,11 +2219,13 @@ class NmrDownloaderPlugin extends obsidian.Plugin {
 			await runNmrDownload(cfg, log, this.mailHooks());
 			waiting.hide();
 			new obsidian.Notice(lines.join('\n') || 'Done', 15000);
+			if (away) this.systemNotify(lines.slice(-4).join('\n') || 'Done');
 		} catch (e) {
 			waiting.hide();
 			lines.push('ERROR: ' + hide(e && e.message));
 			console.error('[NMR Downloader]', hide(e && e.stack ? e.stack : e));
 			new obsidian.Notice(lines.join('\n'), 20000);
+			if (away) this.systemNotify('ERROR: ' + hide(e && e.message));
 		} finally {
 			this.running = false;
 		}
@@ -2129,9 +2237,16 @@ class NmrSettingTab extends obsidian.PluginSettingTab {
 		super(app, plugin);
 		this.plugin = plugin;
 		this.envPath = '';
+		this.stopRecording = null;
+	}
+
+	hide() {
+		if (this.stopRecording) this.stopRecording();
+		if (super.hide) super.hide();
 	}
 
 	display() {
+		if (this.stopRecording) this.stopRecording();
 		const { containerEl } = this;
 		const s = this.plugin.settings;
 		containerEl.empty();
@@ -2558,6 +2673,49 @@ class NmrSettingTab extends obsidian.PluginSettingTab {
 			.setName('Download NMR spectra now')
 			.setDesc('The same as the command "Download NMR spectra" and the download icon in the left ribbon.')
 			.addButton((b) => b.setButtonText('Run').setCta().onClick(() => this.plugin.runDownload()));
+		const shortcut = new obsidian.Setting(containerEl)
+			.setName('Shortcut in every program')
+			.setDesc('Starts the download from any program, also with Obsidian minimized (Obsidian has to be running). Click Record and press the keys, for example Ctrl+Alt+Shift+N; then give a mouse button the same keys (Logi Options+: keystroke). While Obsidian is in the background, a system notification tells when the download starts and how it ended. Empty = off.');
+		const state = shortcut.descEl.createDiv({ cls: 'nmr-downloader-shortcut-state' });
+		let shortcutText;
+		const apply = async (value) => {
+			s.globalShortcut = normalizeAccelerator(value);
+			if (shortcutText) shortcutText.setValue(s.globalShortcut);
+			await save();
+			const r = this.plugin.applyGlobalShortcut();
+			state.setText(r.off ? 'Off.' : r.ok ? `On: ${r.acc}.` : `Not set up: ${r.why}.`);
+		};
+		shortcut.addText((t) => {
+			shortcutText = t;
+			t.setPlaceholder('Ctrl+Alt+Shift+N').setValue(s.globalShortcut || '');
+			t.inputEl.addEventListener('change', () => apply(t.getValue()));
+		});
+		shortcut.addButton((b) =>
+			b.setButtonText('Record').onClick(() => {
+				if (this.stopRecording) return;
+				// the shortcut is let go while recording, so pressing it does not start a download
+				this.plugin.clearGlobalShortcut();
+				b.setButtonText('Press the keys…');
+				const onKey = (e) => {
+					e.preventDefault();
+					e.stopPropagation();
+					if (e.code === 'Escape') return done(null);
+					const acc = acceleratorFromEvent(e);
+					if (acc) done(acc);
+				};
+				const done = (acc) => {
+					window.removeEventListener('keydown', onKey, true);
+					this.stopRecording = null;
+					b.setButtonText('Record');
+					apply(acc || s.globalShortcut || '');
+				};
+				// closing the settings (or redrawing them) ends the recording and keeps the old keys
+				this.stopRecording = () => done(null);
+				window.addEventListener('keydown', onKey, true);
+			})
+		);
+		shortcut.addButton((b) => b.setButtonText('Clear').onClick(() => apply('')));
+		state.setText(!s.globalShortcut ? 'Off.' : this.plugin.registeredShortcut ? `On: ${this.plugin.registeredShortcut}.` : 'Not set up (see the message when Obsidian started).');
 
 		new obsidian.Setting(containerEl).setName('Import').setHeading();
 		new obsidian.Setting(containerEl)
@@ -2589,6 +2747,7 @@ module.exports.core = {
 	prepareConfig, prepareMailConfig, testMailLogin, destinations, buildArchiveRegex, parseEnv, applyEnvToSettings,
 	openZip, extractZip, findSpectrum, runNmrDownload, downloadArchives, processArchives,
 	buildMnovaScript, writeMnovaScript, findAllSpectra, groupSpectra, resolveMnova, openInMnova, resolveTopSpin, topspinDataset, groupFolderName, stripTop, noteFieldNumbers, spectraForId, noteCodeNumber, pagePrefix, foldersStartingWith, topspinSend, topspinStart, openInTopSpin, openWithOf, spectraInFolder, GmailClient, authorizeGoogle, readCredentials, messageFiles, splitSenders, searchQuery,
+	acceleratorFromEvent, normalizeAccelerator,
 	SecretStore, maskSecrets, revokeGoogle, LOCAL_FIELDS, senderAuthentication, fromDomain, senderAddress, downloadFromMessages,
 	crc32, crc32Update, checkZipSize, writeEntry, makeDirsNoLinks, ZIP_MAX_TOTAL, ZIP_MAX_ENTRIES, safeFileName, isTrustedSender, STORAGE_MODES, DEFAULT_SETTINGS, NmrSettingTab,
 };

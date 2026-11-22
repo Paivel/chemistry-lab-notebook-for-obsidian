@@ -148,6 +148,7 @@ C:\NMR\300\
 ### Run and Import
 
 - **Download NMR spectra now** → **Run**: the same as the ribbon icon (section 5).
+- **Shortcut in every program**: keys that start the download from any program, also with Obsidian minimized (section 5).
 - **Import from nmr_settings.env**: reads the settings file of the old Python script and fills in the fields.
 
 ### Checklist
@@ -166,6 +167,15 @@ Click the **download arrow** in the left ribbon, or run the command **Download N
 6. At the end a summary lists what was downloaded, unpacked and opened.
 
 Only archives downloaded in this run are unpacked. A mail already marked as read in Gmail is not processed again; to download it once more, mark it as unread in Gmail. Encrypted and ZIP64 archives are not supported.
+
+### From any program, or with a mouse button
+
+1. **Settings → NMR Downloader → Run → Shortcut in every program** → **Record**, then press the keys, for example **Ctrl+Alt+Shift+N** (or type them in the field). The line under the setting shows *On: Ctrl+Alt+Shift+N.*
+2. Now the keys start the download in any program, also with Obsidian minimized. Obsidian has to be running with this vault open; when it is closed, nothing happens.
+3. For a mouse button: in the mouse software give the button the same keyboard shortcut. In **Logi Options+**: choose the mouse → the button → the keyboard-shortcut action → press Ctrl+Alt+Shift+N; set it for all applications, not for one program.
+4. While Obsidian is in the background, a system notification tells when the download starts and how it ended; the spectra open in MestReNova or TopSpin as usual.
+
+If the line shows *Not set up: the keys are taken…*, another program (or NMR Downloader in a second open vault) already uses them: record other keys. **Clear** turns the shortcut off.
 
 ## 6. MestReNova
 
@@ -283,5 +293,6 @@ The command **Open a Bruker spectrum folder in TopSpin** asks for a path. Paste 
 | *TopSpin not found* | Set **TopSpin folder** to the folder with `topspin.cmd` and press **Check**. |
 | *TopSpin did not answer on port 5650* | TopSpin took longer than 3 minutes to start, or it was closed. Start TopSpin and press the button again. |
 | *MestReNova not found* | Set the full path to `MestReNova.exe` and press **Check**. |
+| The mouse button or the shortcut does nothing | Obsidian must be running (minimized is fine). Check that **Shortcut in every program** shows *On: …*; *Not set up* means the keys are used by another program or a second open vault — record other keys. In Logi Options+ the button must send exactly the same keys, set for all applications. |
 
 More technical details (the commands the plugin sends to TopSpin, the scripting function for buttons) are in `.obsidian/plugins/nmr-downloader/README.md`.
