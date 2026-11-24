@@ -1,7 +1,7 @@
 {
   "id": "cdx-scheme-image",
   "name": "CDX Scheme Image",
-  "version": "1.8.13",
+  "version": "1.8.14",
   "minAppVersion": "1.5.0",
   "description": "Draws the reaction scheme and reagent table of .cdx and .cdxml files (ChemDraw, Reactio Draw) into the matching reaction note and fills pic::, Mass_pic::, yield::, MW:: and the condition fields.",
   "author": "Pavel Sakharov",

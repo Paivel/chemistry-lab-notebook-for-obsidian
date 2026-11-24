@@ -840,8 +840,52 @@ function pieces(str) {
 
 // For right-justified atom labels ChemDraw shows the element groups in reverse
 // order, e.g. "CO2H" attached on its right side is displayed as "HO2C".
+// A group keeps its letters together: "tBu", "iPr", "t-Bu" (a prefix goes with the group after it), "TBS",
+// "PMB" (abbreviations in capitals), "Boc", "Mes", "Bpin" (lower-case letters after a symbol stay with it), so
+// "OtBu" → "tBuO", "NHBoc" → "BocHN", "OTBS" → "TBSO"; brackets are turned round inside: "C(CH3)3" → "(H3C)3C".
+const CAPITAL_GROUPS = ['TBDMS', 'TBDPS', 'TIPS', 'TBS', 'TMS', 'TES', 'TPS', 'PMB', 'PMP', 'DMB', 'MOM', 'MEM', 'SEM', 'BOM', 'THP', 'DMT', 'MMT'];
+// prefixes of alkyl names (t-Bu, iPr, nHex, cPr, sec-Bu) and o-/m-/p- — only before these names, so that SiMe3,
+// LiCl or AcNH keep their element symbol
+const PREFIX = /^(?:(?:tert-|sec-|iso-|neo-|cyclo-|t-?|i-?|n-?|s-?|c-?)(?=(?:Bu|Pr|Am|Pent|Hex|Hept|Oct|Non|Dec|Cy)(?![a-z]))|[omp]-(?=[A-Z]))/;
+// Sn, Zn, In, Mn before a name with an n- prefix: the metal (SnBu3 = tributyltin)
+const N_METALS = new Set(['Sn', 'Zn', 'In', 'Mn']);
+function labelTokens(text) {
+  const out = []; let i = 0; let carry = '';               // text before the first group goes with it ("4-MeO…")
+  const tail = (k) => { while (k < text.length && /[\d+\-•*'′]/.test(text[k]) && !(text[k] === '-' && /[A-Z]/.test(text[k + 1] || ''))) k++; return k; };
+  while (i < text.length) {
+    const rest = text.slice(i);
+    if (text[i] === '(' || text[i] === '[') {
+      let depth = 0; let j = i;
+      for (; j < text.length; j++) { if ('(['.includes(text[j])) depth++; if (')]'.includes(text[j]) && --depth === 0) break; }
+      if (j >= text.length) { out.push(rest); break; }        // unbalanced: leave the rest as it is
+      const inner = labelTokens(text.slice(i + 1, j));
+      const k = tail(j + 1);
+      out.push(carry + text[i] + inner.reverse().join('') + text.slice(j, k)); carry = '';
+      i = k; continue;
+    }
+    const pre = (rest.match(PREFIX) || [''])[0];
+    const at = i + pre.length;
+    const cap = CAPITAL_GROUPS.find((g) => text.startsWith(g, at) && !/[a-z]/.test(text[at + g.length] || ''));
+    let k;
+    if (cap) k = at + cap.length;
+    else if (/[A-Z]/.test(text[at] || '')) {
+      k = at + 1;
+      while (k < text.length && /[a-z]/.test(text[k]) && !PREFIX.test(text.slice(k))) k++;   // Bu, Boc, Mes, Bpin
+      if (k === at + 1 && text[k] === 'n' && N_METALS.has(text.slice(at, at + 2))) k++;
+    } else {                                                    // anything else: up to the next capital or bracket
+      k = i + 1; while (k < text.length && !/[A-Z([]/.test(text[k]) && !PREFIX.test(text.slice(k))) k++;
+      if (out.length) out[out.length - 1] += text.slice(i, k); else carry += text.slice(i, k);
+      i = k; continue;
+    }
+    k = tail(k);
+    out.push(carry + text.slice(i, k)); carry = '';
+    i = k;
+  }
+  if (carry) out.push(carry);
+  return out;
+}
 function reverseLabel(str) {
-  const tokens = str.text.match(/[A-Z][a-z]?\d*|[^A-Z]+/g) || [str.text];
+  const tokens = labelTokens(str.text);
   if (tokens.length < 2) return str;
   const text = tokens.reverse().join('');
   return { text, runs: str.runs.length ? [{ ...str.runs[0], start: 0 }] : [] };
@@ -1381,7 +1425,7 @@ function partLabels(buf, ids) {
   });
 }
 
-module.exports = { render, singleProductId, productIds, partLabels };
+module.exports = { render, singleProductId, productIds, partLabels, reverseLabel };
 
 
 };

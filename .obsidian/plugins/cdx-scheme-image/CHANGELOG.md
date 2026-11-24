@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.8.14 — 2026-11-24
+- **Labels on the left of their atom kept their letters together.** A label left of its atom is saved in bonding order (`CO2H`, `OMe`, `tBu`) and shown turned round by groups (`HO2C`, `MeO`); the plugin split `tBu` into `t` and `Bu` and drew **But** (user's Si_2.cdxml from Reactio Draw; the same with `iPr` → *Pri*, `TBS` → *SBT*, `Boc` → *cBo*). Now a prefix stays with its name (`tBu`, `iPr`, `t-Bu`, `nBu`, `sec-Bu`, `cHex`, `p-Tol`), lower-case letters stay with their capital (`Boc`, `Mes`, `Bpin`), abbreviations in capitals are one group (`TBS`, `TBDPS`, `TIPS`, `TMS`, `PMB`, `MOM`, `SEM`, `THP`…), and brackets are turned round inside (`C(CH3)3` → `(H3C)3C`): `OtBu` → `tBuO`, `NHBoc` → `BocHN`, `OTBS` → `TBSO`, `SiMe2tBu` → `tBuMe2Si`, `SnBu3` → `Bu3Sn`.
+- Pictures of files without such labels are unchanged (snapshot tests byte-identical). Checks: 53 labels, and a drawing with tBu and OtBu left of Si (render test 76/76).
+
 ## 1.8.13 — 2026-11-16
 - **Labelled atoms (isotopes).** An atom with a mass number (Isotope in the file: ¹⁵N, ¹³C) is drawn with the number as a superscript before the element, as ChemDraw and Reactio Draw show it. Reactio Draw writes the label without the number (`N`) and a labelled carbon without any label: the plugin adds the number, and for such a carbon the label with its hydrogens (H₃¹³C, ¹³CH₂…), written on the side away from the bonds. A ChemDraw label that already holds the number (`13CH3`) keeps it, raised; D and T stay as they are.
 - In formulas the mass number in brackets is raised, not lowered: `C16H11N2[15N]` → C₁₆H₁₁N₂[¹⁵N] in the reagent table (ChemDraw and Reactio Draw tables) and `Na[15N]O2` typed next to the arrow → Na[¹⁵N]O₂. Other numbers in brackets in plain text (`[15]`) stay as written.
